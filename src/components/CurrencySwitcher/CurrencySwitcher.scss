@@ -1,0 +1,20 @@
+.currency_switcher {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 0 0 1rem #6666;
+}
+
+.currency_list {
+  list-style-type: none;
+  li {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+  }
+  :hover {
+    color: var(--main-green);
+  }
+}

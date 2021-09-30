@@ -1,0 +1,71 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+}
+
+.navbar_categories_list {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+
+  li {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+  :hover {
+    border-bottom: 1px solid var(--main-green);
+    color: var(--main-green);
+  }
+  .active {
+    border-bottom: 1px solid var(--main-green);
+    color: var(--main-green);
+  }
+}
+
+.return_button {
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .currency_button,
+  .cart_button {
+    padding: 0.5rem;
+    cursor: pointer;
+
+    :hover {
+      > path {
+        fill: var(--main-green);
+        stroke: var(--main-green);
+      }
+    }
+  }
+}
+
+.currency_change,
+.open_cart {
+  position: relative;
+}
+
+.open_cart {
+  .item_count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-black);
+    color: white;
+    padding: 0.25rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1rem;
+    height: 1rem;
+  }
+}

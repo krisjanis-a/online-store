@@ -1,0 +1,100 @@
+.cart_overlay {
+  position: absolute;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.5rem;
+  background-color: white;
+  -webkit-box-shadow: 0 0 2px gray;
+          box-shadow: 0 0 2px gray;
+  z-index: 10;
+}
+
+.cart_overlay .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  white-space: pre;
+}
+
+.cart_overlay .header h3 {
+  font-weight: 700;
+  font-size: 1rem;
+  padding-right: 0.25rem;
+}
+
+.cart_overlay .header p {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.cart_overlay .footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cart_overlay .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.cart_overlay .buttons button {
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: pre;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+}
+
+.cart_overlay .buttons .view_bag {
+  border: 1px solid var(--main-black);
+  background-color: white;
+  color: var(--main-black);
+  margin-right: 0.25rem;
+}
+
+.cart_overlay .buttons .view_bag:hover {
+  -webkit-filter: brightness(95%);
+          filter: brightness(95%);
+}
+
+.cart_overlay .buttons .checkout {
+  background-color: var(--main-green);
+  color: white;
+  margin-left: 0.25rem;
+}
+
+.cart_overlay .buttons .checkout:hover {
+  -webkit-filter: brightness(95%);
+          filter: brightness(95%);
+}
+/*# sourceMappingURL=CartOverlay.css.map */

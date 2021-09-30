@@ -1,0 +1,93 @@
+.navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem 3rem;
+}
+
+.navbar_categories_list {
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar_categories_list li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.navbar_categories_list :hover {
+  border-bottom: 1px solid var(--main-green);
+  color: var(--main-green);
+}
+
+.navbar_categories_list .active {
+  border-bottom: 1px solid var(--main-green);
+  color: var(--main-green);
+}
+
+.return_button {
+  cursor: pointer;
+}
+
+.actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.actions .currency_button,
+.actions .cart_button {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.actions .currency_button :hover > path,
+.actions .cart_button :hover > path {
+  fill: var(--main-green);
+  stroke: var(--main-green);
+}
+
+.currency_change,
+.open_cart {
+  position: relative;
+}
+
+.open_cart .item_count {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: var(--main-black);
+  color: white;
+  padding: 0.25rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+}
+/*# sourceMappingURL=Navbar.css.map */
