@@ -5,17 +5,14 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 import CategoryPage from "./pages/CategoryPage/CategoryPage";
 import CartPage from "./pages/CartPage/CartPage";
 import Navbar from "./components/Navbar/Navbar";
-
+import { connect } from "react-redux";
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  componentDidMount() {}
 
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar />;
         <Router>
           <Switch>
             <Route exact path="/">
@@ -34,4 +31,41 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cart,
+    currency: state.currency,
+    category: state.category,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (product) => {
+      dispatch({
+        type: "ADD_PRODUCT",
+        payload: product,
+      });
+    },
+    removeProduct: (product) => {
+      dispatch({
+        type: "REMOVE_PRODUCT",
+        payload: product,
+      });
+    },
+    // setCurrency: (currency) => {
+    //   dispatch({
+    //     type: "SET_CURRENCY",
+    //     payload: currency,
+    //   });
+    // },
+    setCategory: (category) => {
+      dispatch({
+        type: "SET_CATEGORY",
+        payload: category,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
