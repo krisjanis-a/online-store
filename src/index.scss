@@ -7,6 +7,7 @@
 
 :root {
   --main-green: #5ece7b;
+  --disabled-green: #658c70;
   --main-black: #1d1f22;
   --main-gray: #8d8f9a;
 }
@@ -23,4 +24,5 @@ html {
 
 body {
   font-family: "Raleway", sans-serif;
+  color: var(--main-black);
 }

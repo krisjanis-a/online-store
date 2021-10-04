@@ -28,8 +28,6 @@
 
 .category_page_item .image_field .item_image {
   max-width: 400px;
-  -webkit-box-shadow: 0 0 2px gray;
-          box-shadow: 0 0 2px gray;
   -o-object-fit: cover;
      object-fit: cover;
   aspect-ratio: 1/1;
@@ -105,8 +103,6 @@
 }
 
 .category_page_item.out-of-stock .image_field .item_image {
-  -webkit-box-shadow: 0 0 2px gray;
-          box-shadow: 0 0 2px gray;
   -webkit-filter: opacity(75%);
           filter: opacity(75%);
   z-index: 1;
@@ -115,5 +111,9 @@
 .category_page_item.out-of-stock .item_name,
 .category_page_item.out-of-stock .item_price {
   color: #8d8f9a;
+}
+
+.category_page_item.out-of-stock:hover {
+  cursor: not-allowed;
 }
 /*# sourceMappingURL=CategoryPageItem.css.map */

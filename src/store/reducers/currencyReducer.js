@@ -1,11 +1,7 @@
-const initialState = "EUR";
-
-const currencyReducer = (state = initialState, action) => {
+const currencyReducer = (state = null, action) => {
   switch (action.type) {
     case "SET_CURRENCY":
-      return {
-        state: action.payload,
-      };
+      return action.payload || null;
 
     default:
       return state;

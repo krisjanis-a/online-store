@@ -10,14 +10,21 @@
     flex-direction: column;
 
     .image_option {
+      padding: 0.5rem;
       img {
         max-width: 100px;
       }
+    }
+
+    .image_option:hover {
+      cursor: pointer;
+      box-shadow: 0 0 1rem var(--main-gray);
     }
   }
 
   .main_image {
     width: 500px;
+    padding: 1rem;
 
     img {
       width: 100%;
@@ -100,6 +107,11 @@
       width: 100%;
       padding: 1rem 0;
       cursor: pointer;
+    }
+
+    .add_to_cart:disabled {
+      background-color: var(--disabled-green);
+      cursor: not-allowed;
     }
 
     .description_field {

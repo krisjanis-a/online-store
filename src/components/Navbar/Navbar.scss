@@ -37,19 +37,36 @@
   .cart_button {
     padding: 0.5rem;
     cursor: pointer;
-
-    :hover {
-      > path {
-        fill: var(--main-green);
-        stroke: var(--main-green);
-      }
-    }
   }
 }
 
 .currency_change,
 .open_cart {
   position: relative;
+}
+
+.cart_button:hover {
+  path {
+    fill: var(--main-green);
+    // stroke: var(--main-green);
+  }
+}
+
+.currency_button {
+  display: flex;
+  justify-content: center;
+
+  .arrow {
+    padding-left: 0.25rem;
+  }
+}
+
+.currency_button:hover {
+  color: var(--main-green);
+  path {
+    // fill: var(--main-green);
+    stroke: var(--main-green);
+  }
 }
 
 .open_cart {

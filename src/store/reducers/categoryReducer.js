@@ -1,9 +1,7 @@
-const categoryReducer = (state = "", action) => {
+const categoryReducer = (state = null, action) => {
   switch (action.type) {
     case "SET_CATEGORY":
-      return {
-        state: action.payload,
-      };
+      return action.payload || null;
 
     default:
       return state;

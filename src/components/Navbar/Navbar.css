@@ -58,15 +58,34 @@
   cursor: pointer;
 }
 
-.actions .currency_button :hover > path,
-.actions .cart_button :hover > path {
-  fill: var(--main-green);
-  stroke: var(--main-green);
-}
-
 .currency_change,
 .open_cart {
   position: relative;
+}
+
+.cart_button:hover path {
+  fill: var(--main-green);
+}
+
+.currency_button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.currency_button .arrow {
+  padding-left: 0.25rem;
+}
+
+.currency_button:hover {
+  color: var(--main-green);
+}
+
+.currency_button:hover path {
+  stroke: var(--main-green);
 }
 
 .open_cart .item_count {

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./CartOverlay.css";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
 
@@ -17,10 +18,20 @@ export class CartOverlay extends Component {
           <h3>$100</h3>
         </div>
         <div className="buttons">
-          <button type="button" className="view_bag">
-            VIEW BAG
-          </button>
-          <button type="button" className="checkout">
+          <Link to="/cart">
+            <button
+              type="button"
+              className="view_bag"
+              onClick={() => this.props.toggleCartOverlay()}
+            >
+              VIEW BAG
+            </button>
+          </Link>
+          <button
+            type="button"
+            className="checkout"
+            onClick={() => this.props.toggleCartOverlay()}
+          >
             CHECKOUT
           </button>
         </div>
