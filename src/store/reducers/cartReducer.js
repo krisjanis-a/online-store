@@ -1,11 +1,77 @@
-const initialState = [];
+const cartReducer = (state = [], action) => {
+  let newState;
 
-const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_PRODUCT":
-      return (state = state.push(action.payload));
+      // console.log("Adding product from product page");
+      let newCartItem = action.payload;
+      let newCartItemId = newCartItem.cartItemId;
+      let cartItemExists = false;
+
+      newState = state.map((item) => {
+        if (item.cartItemId === newCartItemId) {
+          cartItemExists = true;
+          let currentQuantity = item.quantity;
+          let updatedItem = { ...item, quantity: currentQuantity + 1 };
+          return updatedItem;
+        } else {
+          return item;
+        }
+      });
+
+      if (!cartItemExists) {
+        newState.push({
+          cartItemId: newCartItemId,
+          cartItem: newCartItem,
+          quantity: 1,
+        });
+      }
+
+      console.log(newState);
+
+      return newState;
+
+    case "ADD_EXISTING_PRODUCT":
+      console.log("Adding existing product");
+      let existingCartItemId = action.payload;
+
+      newState = state.map((item) => {
+        if (item.cartItemId === existingCartItemId) {
+          let currentQuantity = item.quantity;
+          if (currentQuantity > 1) {
+            let updatedItem = { ...item, quantity: currentQuantity + 1 };
+            return updatedItem;
+          } else {
+            return null; //TODO Remove this null from newState afterwards
+          }
+        } else {
+          return item;
+        }
+      });
+
+      console.log(newState);
+
+      return newState;
+
     case "REMOVE_PRODUCT":
-      return state;
+      console.log("Removing existing product");
+      newState = state.map((item) => {
+        if (item.cartItemId === existingCartItemId) {
+          let currentQuantity = item.quantity;
+          if (currentQuantity > 1) {
+            let updatedItem = { ...item, quantity: currentQuantity - 1 };
+            return updatedItem;
+          } else {
+            return null; //TODO Remove this null from newState afterwards
+          }
+        } else {
+          return item;
+        }
+      });
+
+      console.log(newState);
+
+      return newState;
 
     default:
       return state;

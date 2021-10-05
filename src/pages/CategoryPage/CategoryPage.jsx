@@ -57,11 +57,7 @@ export class CategoryPage extends Component {
         <div className="items">
           {this.state.productsId.length !== 0 ? (
             this.state.productsId.map((productId) => {
-              return (
-                <>
-                  <Item key={productId} productId={productId} />
-                </>
-              );
+              return <Item key={productId} productId={productId} />;
             })
           ) : (
             <h1>No products to display</h1>

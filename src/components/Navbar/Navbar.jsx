@@ -65,13 +65,15 @@ export class Navbar extends Component {
       <div className="navbar">
         <ul className="navbar_categories_list">
           {this.props.categories.categories.map((category) => (
-            <li
-              className={category === this.props.category ? "active" : ""}
-              key={category}
-              onClick={() => this.setNewCategory(category)}
-            >
-              {category}
-            </li>
+            <Link to="/" key={category}>
+              <li
+                className={category === this.props.category ? "active" : ""}
+                key={category}
+                onClick={() => this.setNewCategory(category)}
+              >
+                {category}
+              </li>
+            </Link>
           ))}
         </ul>
         <Link to="/">
@@ -194,7 +196,11 @@ export class Navbar extends Component {
           </div>
 
           <div className="open_cart">
-            <div className="item_count"></div>
+            {this.props.cartItems.length !== 0 ? (
+              <div className="item_count">{this.props.cartItems.length}</div>
+            ) : (
+              <></>
+            )}
             <div
               className="cart_button"
               onClick={() => {

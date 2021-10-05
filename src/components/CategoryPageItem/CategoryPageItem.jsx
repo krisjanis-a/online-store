@@ -79,15 +79,21 @@ export class CategoryPageItem extends Component {
       <>
         {Object.keys(this.state.product).length !== 0 ? (
           <Link
-            to={
-              this.state.product.inStock
-                ? `/product:${this.state.product.id}`
-                : "/"
-            }
+            to={`/product:${this.state.product.id}`}
             onClick={() => {
-              this.state.product.inStock &&
-                this.props.selectProduct(this.state.product.id);
+              this.props.selectProduct(this.state.product.id);
             }}
+
+            //? If needed to disallow access to product page of out-of-stock product => should change cursor in scss file too then
+            // to={
+            //   this.state.product.inStock
+            //     ? `/product:${this.state.product.id}`
+            //     : "/"
+            // }
+            // onClick={() => {
+            //   this.state.product.inStock &&
+            //     this.props.selectProduct(this.state.product.id);
+            // }}
           >
             <div
               // add out-of-stock to category_page_item className to enable styling for out of stock products

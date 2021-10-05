@@ -5,14 +5,28 @@
 
   padding: 2rem 4rem;
 
+  .image_choices::-webkit-scrollbar {
+    display: none;
+  }
+
   .image_choices {
     display: flex;
     flex-direction: column;
+    padding: 1rem;
+
+    width: fit-content;
+    max-height: 600px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #eee;
 
     .image_option {
-      padding: 0.5rem;
+      padding: 0.75rem 0;
+      width: 100px;
+      height: 100px;
       img {
-        max-width: 100px;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
     }
 
@@ -25,11 +39,14 @@
   .main_image {
     width: 500px;
     padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
 
@@ -59,16 +76,24 @@
       }
 
       .attribute_choices {
-        button {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+
+        // button { <- replaced with .attribute_option
+        .attribute_option {
           margin-right: 0.5rem;
+          margin-top: 0.5rem;
           padding: 0.5rem;
           cursor: pointer;
           font-size: 1rem;
 
           outline: none;
-          border: 1px solid var(--main-black);
+          border: 1px solid var(--main-gray);
           background-color: white;
           width: 4rem;
+          min-width: fit-content;
           height: 3rem;
         }
 
@@ -82,6 +107,27 @@
           background-color: var(--main-black);
           color: white;
         }
+      }
+
+      .attribute_option.swatch.selected {
+        box-shadow: 0 0 0.05rem 0.1rem var(--main-black);
+      }
+
+      .attribute_option:hover {
+        background-color: #ebebeb;
+        // font-weight: 600;
+      }
+      .attribute_option.swatch:hover {
+        filter: brightness(90%);
+      }
+
+      .attribute_option.selected:hover {
+        background-color: var(--main-black);
+        color: white;
+        font-weight: 400;
+      }
+      .attribute_option.swatch.selected:hover {
+        filter: brightness(100%);
       }
     }
     .price_field {
@@ -107,6 +153,10 @@
       width: 100%;
       padding: 1rem 0;
       cursor: pointer;
+      :disabled {
+        background-color: var(--disabled-green);
+        cursor: not-allowed;
+      }
     }
 
     .add_to_cart:disabled {
@@ -114,12 +164,34 @@
       cursor: not-allowed;
     }
 
-    .description_field {
-      padding-top: 3rem;
-      font-family: "Roboto", sans-serif;
-      font-size: 1rem;
+    .add_to_cart:hover {
+      background-color: var(--hover-green);
+      font-weight: 600;
+    }
+
+    .add_to_cart:hover:disabled {
+      background-color: var(--disabled-green);
+      cursor: not-allowed;
       font-weight: 400;
-      line-height: 1.5rem;
+    }
+
+    .description_field {
+      margin-top: 2rem;
+
+      > * {
+        margin: 0.5rem;
+      }
+
+      li {
+        margin: 0.5rem 0;
+      }
+
+      p {
+        font-family: "Roboto", sans-serif;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5rem;
+      }
     }
   }
 }

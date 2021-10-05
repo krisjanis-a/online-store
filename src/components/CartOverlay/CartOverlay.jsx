@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./CartOverlay.css";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
+import { connect } from "react-redux";
 
 export class CartOverlay extends Component {
   render() {
@@ -40,4 +41,31 @@ export class CartOverlay extends Component {
   }
 }
 
-export default CartOverlay;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cart,
+    currency: state.currency,
+    category: state.category,
+    currencies: state.currencies,
+    categories: state.categories,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectProduct: (productId) => {
+      dispatch({
+        type: "SELECT_PRODUCT",
+        payload: productId,
+      });
+    },
+    addToCart: (cartItem) => {
+      dispatch({
+        type: "ADD_PRODUCT",
+        payload: cartItem,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartOverlay);

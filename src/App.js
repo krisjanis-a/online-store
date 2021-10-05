@@ -10,24 +10,21 @@ import makeQuery from "./apolloClient";
 class App extends Component {
   componentDidMount() {
     // console.log("App component did mount");
-
-    //! This throws an error if executing both functions after mounting component on whichever function is 2nd => TypeError: state.prevCategories.push is not a function at categoriesReducer => Haven't understood why yet...
     this.getCurrencies();
-    // this.getCategories();
+    this.getCategories();
   }
 
   componentDidUpdate(prevProps) {
     // console.log("App component did update");
 
     // Fetch & save categories
-    if (prevProps.categories.categories.length === 0) {
-      this.getCategories();
-    }
-
+    // if (prevProps.categories.categories.length === 0) {
+    //   this.getCategories();
+    // }
     // Fetch & save currencies
-    if (prevProps.currencies.currencies.length === 0) {
-      this.getCurrencies();
-    }
+    // if (prevProps.currencies.currencies.length === 0) {
+    //   this.getCurrencies();
+    // }
 
     // Initial category set after mounting component
     if (prevProps.category === null) {
@@ -35,7 +32,6 @@ class App extends Component {
         this.props.setCategory(this.props.categories.categories[0]);
       }
     }
-
     // Initial currency set after mounting component
     if (prevProps.currency === null) {
       if (this.props.currencies.currencies[0]) {

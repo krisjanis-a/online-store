@@ -21,12 +21,17 @@
           justify-content: space-between;
 }
 
+.navbar_categories_list a {
+  text-decoration: none;
+  color: var(--main-black);
+}
+
 .navbar_categories_list li {
   padding: 0.5rem;
   cursor: pointer;
 }
 
-.navbar_categories_list :hover {
+.navbar_categories_list li:hover {
   border-bottom: 1px solid var(--main-green);
   color: var(--main-green);
 }
@@ -102,7 +107,8 @@
   color: white;
   padding: 0.25rem;
   border-radius: 50%;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
+  font-family: "Roboto Condensed", sans-serif;
   position: absolute;
   top: 0;
   right: 0;

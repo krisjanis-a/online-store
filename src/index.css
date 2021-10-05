@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap");
 :root {
   --main-green: #5ece7b;
+  --hover-green: #3fc964;
   --disabled-green: #658c70;
   --main-black: #1d1f22;
   --main-gray: #8d8f9a;
