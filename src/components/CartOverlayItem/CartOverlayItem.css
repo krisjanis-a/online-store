@@ -9,6 +9,7 @@
       -ms-flex-align: stretch;
           align-items: stretch;
   padding: 1rem 0;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .cart_overlay_item .attribute_choices {
@@ -22,6 +23,7 @@
 
 .cart_overlay_item .attribute_choices button {
   margin-right: 0.25rem;
+  margin-top: 0.5rem;
   padding: 0.1rem 0.25rem;
   cursor: default;
   font-size: 0.8rem;

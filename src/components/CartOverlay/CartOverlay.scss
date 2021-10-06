@@ -8,11 +8,13 @@
   background-color: white;
   box-shadow: 0 0 2px gray;
   z-index: 10;
+  height: min(80vh, 800px);
 
   .header {
     display: flex;
     flex-direction: row;
     white-space: pre;
+    padding: 0.5rem 0;
 
     h3 {
       font-weight: 700;
@@ -24,6 +26,25 @@
       font-weight: 500;
       font-size: 1rem;
     }
+  }
+
+  .cart_items {
+    overflow-y: scroll;
+    padding-right: 5px;
+  }
+
+  .cart_items::-webkit-scrollbar {
+    width: 10px;
+  }
+  .cart_items::-webkit-scrollbar-track {
+    background: var(--main-grey);
+  }
+  .cart_items::-webkit-scrollbar-thumb {
+    background: #6666;
+    border-radius: 5px;
+  }
+  .cart_items::-webkit-scrollbar-thumb:hover {
+    background: #6668;
   }
 
   .footer {

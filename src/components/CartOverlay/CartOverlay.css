@@ -27,6 +27,7 @@
       -ms-flex-direction: row;
           flex-direction: row;
   white-space: pre;
+  padding: 0.5rem 0;
 }
 
 .cart_overlay .header h3 {
@@ -38,6 +39,28 @@
 .cart_overlay .header p {
   font-weight: 500;
   font-size: 1rem;
+}
+
+.cart_overlay .cart_items {
+  overflow-y: scroll;
+  padding-right: 5px;
+}
+
+.cart_overlay .cart_items::-webkit-scrollbar {
+  width: 10px;
+}
+
+.cart_overlay .cart_items::-webkit-scrollbar-track {
+  background: var(--main-grey);
+}
+
+.cart_overlay .cart_items::-webkit-scrollbar-thumb {
+  background: #6666;
+  border-radius: 5px;
+}
+
+.cart_overlay .cart_items::-webkit-scrollbar-thumb:hover {
+  background: #6668;
 }
 
 .cart_overlay .footer {

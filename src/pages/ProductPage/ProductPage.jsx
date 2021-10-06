@@ -82,8 +82,16 @@ export class ProductPage extends Component {
         brand
       }
     }`;
+
+    console.log(productIdQuery);
+
     makeQuery(productIdQuery).then((results) => {
       if (results.product !== null) {
+        console.log("Selected product: " + this.props.selectedProduct);
+        console.log("Fetch product by id: " + results.product.name);
+        console.log(results.product.attributes[0].items);
+        console.log(results.product.prices);
+
         let productInfo = results.product;
         this.setState({ product: productInfo });
         this.setState({ prices: productInfo.prices });

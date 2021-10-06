@@ -1,4 +1,6 @@
 .navbar {
+  position: relative;
+  top: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,9 +11,11 @@
       -ms-flex-align: center;
           align-items: center;
   padding: 1rem 3rem;
+  background-color: white;
+  z-index: 20;
 }
 
-.navbar_categories_list {
+.navbar .navbar_categories_list {
   list-style-type: none;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -21,31 +25,31 @@
           justify-content: space-between;
 }
 
-.navbar_categories_list a {
+.navbar .navbar_categories_list a {
   text-decoration: none;
   color: var(--main-black);
 }
 
-.navbar_categories_list li {
+.navbar .navbar_categories_list li {
   padding: 0.5rem;
   cursor: pointer;
 }
 
-.navbar_categories_list li:hover {
+.navbar .navbar_categories_list li:hover {
   border-bottom: 1px solid var(--main-green);
   color: var(--main-green);
 }
 
-.navbar_categories_list .active {
+.navbar .navbar_categories_list .active {
   border-bottom: 1px solid var(--main-green);
   color: var(--main-green);
 }
 
-.return_button {
+.navbar .return_button {
   cursor: pointer;
 }
 
-.actions {
+.navbar .actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -57,22 +61,22 @@
           align-items: center;
 }
 
-.actions .currency_button,
-.actions .cart_button {
+.navbar .actions .currency_button,
+.navbar .actions .cart_button {
   padding: 0.5rem;
   cursor: pointer;
 }
 
-.currency_change,
-.open_cart {
+.navbar .currency_change,
+.navbar .open_cart {
   position: relative;
 }
 
-.cart_button:hover path {
+.navbar .cart_button:hover path {
   fill: var(--main-green);
 }
 
-.currency_button {
+.navbar .currency_button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -81,19 +85,19 @@
           justify-content: center;
 }
 
-.currency_button .arrow {
+.navbar .currency_button .arrow {
   padding-left: 0.25rem;
 }
 
-.currency_button:hover {
+.navbar .currency_button:hover {
   color: var(--main-green);
 }
 
-.currency_button:hover path {
+.navbar .currency_button:hover path {
   stroke: var(--main-green);
 }
 
-.open_cart .item_count {
+.navbar .open_cart .item_count {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -114,5 +118,15 @@
   right: 0;
   width: 1rem;
   height: 1rem;
+}
+
+.navbar_overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 18;
+  height: 100vh;
+  width: 100vw;
+  background-color: #39374838;
 }
 /*# sourceMappingURL=Navbar.css.map */

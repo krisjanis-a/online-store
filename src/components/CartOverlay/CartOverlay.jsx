@@ -51,14 +51,20 @@ export class CartOverlay extends Component {
     };
 
     return (
-      <div className="cart_overlay" ref={this.cartOverlayRef}>
+      <div
+        className="cart_overlay"
+        ref={this.cartOverlayRef}
+        style={{ maxHeight: "min(80vh, 800px)" }}
+      >
         <div className="header">
           <h3>My Bag,</h3>
           <p>{this.props.cartItems.length} Items</p>
         </div>
-        {this.props.cartItems.map((item) => (
-          <CartOverlayItem key={item.cartItemId} itemId={item.cartItemId} />
-        ))}
+        <div className="cart_items">
+          {this.props.cartItems.map((item) => (
+            <CartOverlayItem key={item.cartItemId} itemId={item.cartItemId} />
+          ))}
+        </div>
         <div className="footer">
           <h3>Total</h3>
           <h3>
@@ -77,14 +83,17 @@ export class CartOverlay extends Component {
               VIEW BAG
             </button>
           </Link>
-          <button
-            type="button"
-            className="checkout"
-            onClick={() => this.props.toggleCartOverlay()}
-            disabled={this.props.cartItems.length === 0}
-          >
-            CHECKOUT
-          </button>
+
+          <Link to="/cart">
+            <button
+              type="button"
+              className="checkout"
+              onClick={() => this.props.toggleCartOverlay()}
+              disabled={this.props.cartItems.length === 0}
+            >
+              CHECKOUT
+            </button>
+          </Link>
         </div>
       </div>
     );

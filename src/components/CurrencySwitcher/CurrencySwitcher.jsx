@@ -58,7 +58,6 @@ export class CurrencySwitcher extends Component {
                 this.props.toggleCurrencySwitcher();
               }}
             >
-              {/* {currencySymbols[currency] + " " + currency} */}
               {`${currencySymbols[currency]} ${currency}`}
             </li>
           ))}
@@ -70,11 +69,8 @@ export class CurrencySwitcher extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cartItems: state.cart,
     currency: state.currency,
-    category: state.category,
     currencies: state.currencies,
-    categories: state.categories,
   };
 };
 
