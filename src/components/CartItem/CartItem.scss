@@ -28,16 +28,21 @@
     }
 
     .attribute_choices {
+      display: flex;
+      align-items: center;
+
       button {
         margin-right: 0.5rem;
         padding: 0.5rem;
-        cursor: pointer;
+
         font-size: 1rem;
 
         outline: none;
         border: 1px solid var(--main-black);
-        background-color: white;
+        background-color: var(--main-black);
+        color: white;
         width: 4rem;
+        min-width: fit-content;
         height: 3rem;
       }
 
@@ -47,10 +52,10 @@
         cursor: not-allowed;
       }
 
-      .selected {
-        background-color: var(--main-black);
-        color: white;
-      }
+      // .selected {
+      //   background-color: var(--main-black);
+      //   color: white;
+      // }
     }
   }
 
@@ -67,6 +72,7 @@
       padding: 0 1rem;
 
       .quantity {
+        font-family: "Roboto", sans-serif;
         font-size: 1.5rem;
         font-weight: 500;
       }
@@ -88,6 +94,9 @@
 
     .image_container {
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .next_image,
       .prev_image {

@@ -105,9 +105,15 @@ export class ProductPage extends Component {
     // Create selected attributes array
     let attributes = this.state.product.attributes.map((attributeSet) => {
       let attributeSetId = attributeSet.id;
-      let attributeValue = attributeSet.items[0].displayValue;
+      let attributeDisplayValue = attributeSet.items[0].displayValue;
       let attributeType = attributeSet.type;
-      return { [attributeSetId]: attributeValue, type: attributeType };
+      let attributeValue = attributeSet.items[0].value;
+      return {
+        name: attributeSetId,
+        displayValue: attributeDisplayValue,
+        type: attributeType,
+        value: attributeValue,
+      };
     });
 
     // Create default cart item
@@ -153,14 +159,24 @@ export class ProductPage extends Component {
     });
   }
 
-  updateAttributes(attributeId, attributeValue, attributeType) {
+  updateAttributes(
+    attributeId,
+    attributeDisplayValue,
+    attributeType,
+    attributeValue
+  ) {
     // console.log(`Attribute Id: ${attributeId} and value ${attributeValue}`);
 
     // Add new attribute to existing ones
     let newAttributes = this.state.cartItem.selectedAttributes.map(
       (attribute) => {
-        if (attribute.hasOwnProperty(attributeId)) {
-          return { [attributeId]: attributeValue, type: attributeType };
+        if (attribute.name === attributeId) {
+          return {
+            name: attributeId,
+            displayValue: attributeDisplayValue,
+            type: attributeType,
+            value: attributeValue,
+          };
         } else {
           return attribute;
         }
@@ -169,9 +185,7 @@ export class ProductPage extends Component {
 
     // Create new attribute string section for cartItemId
     let newCartItemIdAttributes = newAttributes.map((attribute) => {
-      return `${Object.entries(attribute)[0][0]}-${
-        Object.entries(attribute)[0][1]
-      }`;
+      return `${attribute.name}-${attribute.displayValue}`;
     });
 
     // console.log(this.state.cartItem.cartItemId);
@@ -187,10 +201,6 @@ export class ProductPage extends Component {
       },
     }));
   }
-
-  // handleAddToCart(e) {
-  //   console.log("Adding to cart");
-  // }
 
   render() {
     const currencySymbols = {
@@ -240,7 +250,10 @@ export class ProductPage extends Component {
                 let attributes = attributeSet.items;
 
                 return (
-                  <div className="attribute_field" key={attributeName}>
+                  <div
+                    className="attribute_field"
+                    key={attributeName + attributes[0].value}
+                  >
                     <h3 className="attribute_name">{attributeName}:</h3>
                     <div className="attribute_choices">
                       {attributeType === "text" && (
@@ -250,14 +263,12 @@ export class ProductPage extends Component {
 
                             let selectedAttribute =
                               this.state.cartItem.selectedAttributes.filter(
-                                (attribute) =>
-                                  attribute.hasOwnProperty(attributeName)
+                                (attribute) => attribute.name === attributeName
                               )[0];
 
-                            let selectedAttributeName =
-                              Object.entries(selectedAttribute)[0][0];
+                            let selectedAttributeName = selectedAttribute.name;
                             let selectedAttributeValue =
-                              Object.entries(selectedAttribute)[0][1];
+                              selectedAttribute.value;
 
                             return (
                               // Add selected / unavailable to className to add styling
@@ -266,8 +277,7 @@ export class ProductPage extends Component {
                               
                               ${
                                 selectedAttributeName === attributeName &&
-                                selectedAttributeValue ===
-                                  attribute.displayValue
+                                selectedAttributeValue === attribute.value
                                   ? "selected"
                                   : ""
                               }
@@ -279,7 +289,8 @@ export class ProductPage extends Component {
                                   this.updateAttributes(
                                     attributeName,
                                     attribute.displayValue,
-                                    attributeType
+                                    attributeType,
+                                    attribute.value
                                   )
                                 }
                               >
@@ -296,22 +307,18 @@ export class ProductPage extends Component {
 
                             let selectedAttribute =
                               this.state.cartItem.selectedAttributes.filter(
-                                (attribute) =>
-                                  attribute.hasOwnProperty(attributeName)
+                                (attribute) => attribute.name === attributeName
                               )[0];
 
-                            let selectedAttributeName =
-                              Object.entries(selectedAttribute)[0][0];
+                            let selectedAttributeName = selectedAttribute.name;
                             let selectedAttributeValue =
-                              Object.entries(selectedAttribute)[0][1];
+                              selectedAttribute.value;
 
-                            // Could create in scss & add selected / unavailable to className to add styling if necessary
                             return (
                               <button
                                 className={`attribute_option ${attributeType} ${
                                   selectedAttributeName === attributeName &&
-                                  selectedAttributeValue ===
-                                    attribute.displayValue
+                                  selectedAttributeValue === attribute.value
                                     ? "selected"
                                     : ""
                                 }`}
@@ -324,7 +331,8 @@ export class ProductPage extends Component {
                                   this.updateAttributes(
                                     attributeName,
                                     attribute.displayValue,
-                                    attributeType
+                                    attributeType,
+                                    attribute.value
                                   )
                                 }
                               ></button>

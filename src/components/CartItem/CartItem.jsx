@@ -8,8 +8,8 @@ export class CartItem extends Component {
 
     this.state = {
       item: null,
-      prices: [],
-      attributes: [],
+      imageIndex: 0,
+      quantityChanged: false,
     };
   }
 
@@ -21,7 +21,16 @@ export class CartItem extends Component {
     });
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.quantityChanged === true) {
+      this.setState({
+        item: this.props.cartItems.filter(
+          (item) => item.cartItemId === this.props.itemId
+        )[0],
+        quantityChanged: false,
+      });
+    }
+  }
 
   getPriceByCurrency() {
     let priceObj = this.state.item.cartItem.prices.filter(
@@ -34,6 +43,34 @@ export class CartItem extends Component {
     }
   }
 
+  changeImage(direction) {
+    if (direction === "next") {
+      if (
+        this.state.imageIndex ===
+        this.state.item.cartItem.gallery.length - 1
+      ) {
+        this.setState({
+          imageIndex: 0,
+        });
+      } else {
+        this.setState({
+          imageIndex: this.state.imageIndex + 1,
+        });
+      }
+    }
+    if (direction === "prev") {
+      if (this.state.imageIndex === 0) {
+        this.setState({
+          imageIndex: this.state.item.cartItem.gallery.length - 1,
+        });
+      } else {
+        this.setState({
+          imageIndex: this.state.imageIndex - 1,
+        });
+      }
+    }
+  }
+
   render() {
     const currencySymbols = {
       USD: "$",
@@ -43,7 +80,6 @@ export class CartItem extends Component {
       RUB: "₽",
     };
 
-    console.log(this.state.prices);
     return (
       <div className="cart_item">
         {this.state.item !== null ? (
@@ -57,24 +93,77 @@ export class CartItem extends Component {
                   this.getPriceByCurrency()}
               </h3>
               <div className="attribute_choices">
-                <button className="attribute_option unavailable">XS</button>
-                <button className="attribute_option selected">S</button>
-                <button className="attribute_option">M</button>
-                <button className="attribute_option">L</button>
+                {this.state.item.cartItem.selectedAttributes.map(
+                  (attribute) => {
+                    return (
+                      <div key={attribute.name}>
+                        {attribute.type === "text" && (
+                          <button
+                            title={attribute.name}
+                            className={`attribute_choice ${attribute.type}`}
+                            key={attribute.name}
+                          >
+                            {attribute.value}
+                          </button>
+                        )}
+                        {attribute.type === "swatch" && (
+                          <button
+                            title={attribute.displayValue}
+                            className={`attribute_choice ${attribute.type}`}
+                            key={attribute.name}
+                            style={{
+                              backgroundColor: `${attribute.value}`,
+                            }}
+                          ></button>
+                        )}
+                      </div>
+                    );
+                  }
+                )}
               </div>
             </div>
             <div className="quantity-image_wrapper">
               <div className="quantity_field">
-                <button className="add_item">+</button>
-                <p className="quantity">1</p>
-                <button className="remove_item">-</button>
+                <button
+                  className="add_item"
+                  onClick={() => {
+                    this.props.addExistingItem(this.state.item.cartItemId);
+                    this.setState({ quantityChanged: true });
+                  }}
+                >
+                  +
+                </button>
+                <p className="quantity">{this.state.item.quantity}</p>
+                <button
+                  className="remove_item"
+                  onClick={() => {
+                    this.props.removeExistingItem(this.state.item.cartItemId);
+                    this.setState({ quantityChanged: true });
+                  }}
+                >
+                  -
+                </button>
               </div>
               <div className="image_container">
-                <button className="prev_image">&lt;</button>
-                <button className="next_image">&gt;</button>
+                {this.state.item.cartItem.gallery.length > 1 && (
+                  <>
+                    <button
+                      className="prev_image"
+                      onClick={() => this.changeImage("prev")}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      className="next_image"
+                      onClick={() => this.changeImage("next")}
+                    >
+                      &gt;
+                    </button>
+                  </>
+                )}
                 <img
                   className="item_image"
-                  src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=715&q=80"
+                  src={this.state.item.cartItem.gallery[this.state.imageIndex]}
                   alt=""
                 />
               </div>
@@ -92,9 +181,6 @@ const mapStateToProps = (state) => {
   return {
     cartItems: state.cart,
     currency: state.currency,
-    category: state.category,
-    currencies: state.currencies,
-    categories: state.categories,
   };
 };
 

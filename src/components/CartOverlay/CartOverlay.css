@@ -97,4 +97,11 @@
   -webkit-filter: brightness(95%);
           filter: brightness(95%);
 }
+
+.cart_overlay .buttons .checkout:disabled {
+  background-color: var(--disabled-green);
+  cursor: not-allowed;
+  -webkit-filter: brightness(100%);
+          filter: brightness(100%);
+}
 /*# sourceMappingURL=CartOverlay.css.map */

@@ -21,9 +21,9 @@ export class CategoryPage extends Component {
   componentDidUpdate(prevProps, prevState) {
     // console.log("Category Page component did update");
 
-    if (this.state.productsId.length === 0) {
-      this.fetchProductsById();
-    }
+    // if (this.state.productsId.length === 0) {
+    //   this.fetchProductsById();
+    // }
     if (this.props.category !== prevProps.category) {
       this.fetchProductsById();
     }

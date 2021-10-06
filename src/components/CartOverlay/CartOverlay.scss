@@ -70,5 +70,10 @@
     .checkout:hover {
       filter: brightness(95%);
     }
+    .checkout:disabled {
+      background-color: var(--disabled-green);
+      cursor: not-allowed;
+      filter: brightness(100%);
+    }
   }
 }
