@@ -230,13 +230,7 @@ export class ProductPage extends Component {
             </div>
 
             <div className="main_image">
-              <img
-                src={this.state.mainImage}
-                alt=""
-                // alt={`${this.state.product.name} ${this.state.gallery.indexOf(
-                //   this.state.mainImage
-                // )}`}
-              />
+              <img src={this.state.mainImage} alt="" />
             </div>
             <div className="product_info">
               <h2 className="brand_title">{this.state.product.brand}</h2>
@@ -379,9 +373,6 @@ const mapStateToProps = (state) => {
     selectedProduct: state.selectedProduct,
     cartItems: state.cart,
     currency: state.currency,
-    category: state.category,
-    currencies: state.currencies,
-    categories: state.categories,
   };
 };
 

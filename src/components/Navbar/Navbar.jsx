@@ -18,17 +18,17 @@ export class Navbar extends Component {
     this.setNewCategory = this.setNewCategory.bind(this);
   }
 
-  componentDidMount() {
-    // console.log("Navbar component did mount");
-    // Logging props
-    // console.log(this.props);
-  }
+  // componentDidMount() {
+  //   // console.log("Navbar component did mount");
+  //   // Logging props
+  //   // console.log(this.props);
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    // console.log("Navbar component did update");
-    // Logging props
-    // console.log(this.props);
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   // console.log("Navbar component did update");
+  //   // Logging props
+  //   // console.log(this.props);
+  // }
 
   // Set new category
 

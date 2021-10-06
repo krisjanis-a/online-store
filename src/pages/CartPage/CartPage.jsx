@@ -45,7 +45,6 @@ export class CartPage extends Component {
             type="button"
             className="checkout"
             disabled={this.props.cartItems.length === 0}
-            // onClick={() => this.calculateTotal()}
           >
             CHECKOUT
           </button>
@@ -59,9 +58,6 @@ const mapStateToProps = (state) => {
   return {
     cartItems: state.cart,
     currency: state.currency,
-    category: state.category,
-    currencies: state.currencies,
-    categories: state.categories,
   };
 };
 

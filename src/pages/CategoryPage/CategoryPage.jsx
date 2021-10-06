@@ -73,8 +73,6 @@ const mapStateToProps = (state) => {
     cartItems: state.cart,
     currency: state.currency,
     category: state.category,
-    currencies: state.currencies,
-    categories: state.categories,
   };
 };
 

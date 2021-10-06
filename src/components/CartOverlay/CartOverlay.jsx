@@ -5,6 +5,32 @@ import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
 import { connect } from "react-redux";
 
 export class CartOverlay extends Component {
+  constructor(props) {
+    super(props);
+    this.cartOverlayRef = React.createRef();
+
+    this.clickInsideComponent = this.clickInsideComponent.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("mousedown", this.clickInsideComponent);
+  }
+
+  clickInsideComponent(e) {
+    e.stopPropagation();
+    let cartButton = document.querySelector(".cart_button");
+    if (
+      !this.cartOverlayRef.current.contains(e.target) &&
+      !cartButton.contains(e.target)
+    ) {
+      this.props.toggleCartOverlay();
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("mousedown", this.clickInsideComponent);
+  }
+
   calculateTotal() {
     let total = this.props.cartItems.map(
       (item) =>
@@ -25,7 +51,7 @@ export class CartOverlay extends Component {
     };
 
     return (
-      <div className="cart_overlay">
+      <div className="cart_overlay" ref={this.cartOverlayRef}>
         <div className="header">
           <h3>My Bag,</h3>
           <p>{this.props.cartItems.length} Items</p>

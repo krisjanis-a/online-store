@@ -9,7 +9,6 @@ export class CartOverlayItem extends Component {
     this.state = {
       item: null,
       imageIndex: 0,
-      quantityChanged: false,
     };
   }
 
@@ -19,17 +18,6 @@ export class CartOverlayItem extends Component {
         (item) => item.cartItemId === this.props.itemId
       )[0],
     });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.quantityChanged === true) {
-      this.setState({
-        item: this.props.cartItems.filter(
-          (item) => item.cartItemId === this.props.itemId
-        )[0],
-        quantityChanged: false,
-      });
-    }
   }
 
   getPriceByCurrency() {
@@ -132,17 +120,21 @@ export class CartOverlayItem extends Component {
                   className="add_item"
                   onClick={() => {
                     this.props.addExistingItem(this.state.item.cartItemId);
-                    this.setState({ quantityChanged: true });
                   }}
                 >
                   +
                 </button>
-                <p className="quantity">{this.state.item.quantity}</p>
+                <p className="quantity">
+                  {
+                    this.props.cartItems.filter(
+                      (item) => item.cartItemId === this.state.item.cartItemId
+                    )[0].quantity
+                  }
+                </p>
                 <button
                   className="remove_item"
                   onClick={() => {
                     this.props.removeExistingItem(this.state.item.cartItemId);
-                    this.setState({ quantityChanged: true });
                   }}
                 >
                   -
