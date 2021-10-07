@@ -9,12 +9,17 @@
     display: flex;
     align-items: center;
 
-    button {
+    .attribute_choice {
       margin-right: 0.25rem;
       margin-top: 0.5rem;
       padding: 0.1rem 0.25rem;
       cursor: default;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 0.8rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       outline: none;
       border: 1px solid var(--main-black);
@@ -25,7 +30,7 @@
       height: 2.5rem;
     }
 
-    button:hover {
+    .attribute_choice:hover {
       background-color: var(--main-black);
       color: white;
     }

@@ -90,23 +90,23 @@ export class CartOverlayItem extends Component {
                     return (
                       <div key={attribute.name}>
                         {attribute.type === "text" && (
-                          <button
+                          <div
                             title={attribute.name}
                             className={`attribute_choice ${attribute.type}`}
                             key={attribute.name}
                           >
                             {attribute.value}
-                          </button>
+                          </div>
                         )}
                         {attribute.type === "swatch" && (
-                          <button
+                          <div
                             title={attribute.displayValue}
                             className={`attribute_choice ${attribute.type}`}
                             key={attribute.name}
                             style={{
                               backgroundColor: `${attribute.value}`,
                             }}
-                          ></button>
+                          ></div>
                         )}
                       </div>
                     );

@@ -81,7 +81,6 @@
         align-items: center;
         flex-wrap: wrap;
 
-        // button { <- replaced with .attribute_option
         .attribute_option {
           margin-right: 0.5rem;
           margin-top: 0.5rem;
@@ -115,7 +114,6 @@
 
       .attribute_option:hover {
         background-color: #ebebeb;
-        // font-weight: 600;
       }
       .attribute_option.swatch:hover {
         filter: brightness(90%);
@@ -166,13 +164,11 @@
 
     .add_to_cart:hover {
       background-color: var(--hover-green);
-      font-weight: 600;
     }
 
     .add_to_cart:hover:disabled {
       background-color: var(--disabled-green);
       cursor: not-allowed;
-      font-weight: 400;
     }
 
     .description_field {

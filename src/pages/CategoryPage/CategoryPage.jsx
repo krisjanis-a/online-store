@@ -14,16 +14,10 @@ export class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    // console.log("Category Page component did mount");
     this.fetchProductsById();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log("Category Page component did update");
-
-    // if (this.state.productsId.length === 0) {
-    //   this.fetchProductsById();
-    // }
     if (this.props.category !== prevProps.category) {
       this.fetchProductsById();
     }
@@ -44,7 +38,7 @@ export class CategoryPage extends Component {
         let categoryProducts = results.category.products.map(
           (product) => product.id
         );
-        // console.log(categoryProducts);
+
         this.setState({ productsId: categoryProducts });
       }
     });
@@ -70,8 +64,6 @@ export class CategoryPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cartItems: state.cart,
-    currency: state.currency,
     category: state.category,
   };
 };

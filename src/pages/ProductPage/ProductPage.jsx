@@ -27,13 +27,10 @@ export class ProductPage extends Component {
   }
 
   componentDidMount() {
-    // console.log("Product page did mount");
     this.fetchProductById();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log("Product page did update");
-
     // If no selected product present in props (redux store) on component mounting - case where product is accessed from URL
     if (Object.keys(this.state.product).length === 0) {
       this.fetchProductById();
@@ -51,7 +48,6 @@ export class ProductPage extends Component {
   }
 
   componentWillUnmount() {
-    // console.log("Product page will unmount");
     this.props.selectProduct(null);
   }
 
@@ -118,9 +114,7 @@ export class ProductPage extends Component {
   }
 
   addDefaultValuesToCartItem() {
-    // console.log("adding default values");
-
-    // Create attribute section for cartItemId
+    // Create attribute section string for cartItemId
     let attributesString = this.state.product.attributes.map((attributeSet) => {
       return `${attributeSet.id}-${attributeSet.items[0].displayValue}`;
     });
@@ -162,7 +156,6 @@ export class ProductPage extends Component {
       let phrase = /\/product:(.+)/;
       let match = phrase.exec(currentURL)[1];
       this.props.selectProduct(match);
-      // console.log("Selected product from URL");
     }
   }
 
@@ -230,8 +223,6 @@ export class ProductPage extends Component {
     return (
       <>
         {Object.keys(this.state.product).length !== 0 ? (
-          // &&
-          // this.state.cartItem.selectedAttributes.length !== 0
           <div className="product_page">
             <div className="image_choices">
               {this.state.images.map((imgURL) => (
@@ -254,7 +245,6 @@ export class ProductPage extends Component {
 
               {/* ATTRIBUTE SETUP */}
               {this.state.attributes.map((attributeSet) => {
-                // console.log(attributeSet);
                 let attributeName = attributeSet.name;
                 let attributeType = attributeSet.type;
                 let attributes = attributeSet.items;
@@ -381,7 +371,6 @@ export class ProductPage extends Component {
               <button
                 className="add_to_cart"
                 disabled={!this.state.product.inStock}
-                // onClick={() => this.handleAddToCart()}
                 onClick={() => this.props.addToCart(this.state.cartItem)}
               >
                 ADD TO CART
@@ -403,7 +392,6 @@ const mapStateToProps = (state) => {
   return {
     selectedProduct: state.selectedProduct,
     products: state.products,
-    cartItems: state.cart,
     currency: state.currency,
   };
 };

@@ -9,14 +9,11 @@ import { connect } from "react-redux";
 import makeQuery from "./apolloClient";
 class App extends Component {
   componentDidMount() {
-    // console.log("App component did mount");
     this.getCurrencies();
     this.getCategories();
   }
 
   componentDidUpdate(prevProps) {
-    // console.log("App component did update");
-
     // Initial category set after mounting component
     if (prevProps.category === null) {
       if (this.props.categories.categories[0]) {

@@ -200,13 +200,11 @@
 
 .product_page .product_info .add_to_cart:hover {
   background-color: var(--hover-green);
-  font-weight: 600;
 }
 
 .product_page .product_info .add_to_cart:hover:disabled {
   background-color: var(--disabled-green);
   cursor: not-allowed;
-  font-weight: 400;
 }
 
 .product_page .product_info .description_field {

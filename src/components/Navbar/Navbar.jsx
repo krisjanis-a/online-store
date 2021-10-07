@@ -18,18 +18,6 @@ export class Navbar extends Component {
     this.setNewCategory = this.setNewCategory.bind(this);
   }
 
-  // componentDidMount() {
-  //   // console.log("Navbar component did mount");
-  //   // Logging props
-  //   // console.log(this.props);
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   // console.log("Navbar component did update");
-  //   // Logging props
-  //   // console.log(this.props);
-  // }
-
   // Set new category
 
   setNewCategory(newCategory) {
@@ -90,11 +78,7 @@ export class Navbar extends Component {
             ))}
           </ul>
           <Link to="/">
-            <div
-              title="Return to Home Page"
-              className="return_button"
-              // onClick={() => window.location.replace("/")}
-            >
+            <div title="Return to Home Page" className="return_button">
               <svg
                 width="41"
                 height="41"
@@ -264,7 +248,6 @@ const mapStateToProps = (state) => {
     cartItems: state.cart,
     currency: state.currency,
     category: state.category,
-    currencies: state.currencies,
     categories: state.categories,
   };
 };

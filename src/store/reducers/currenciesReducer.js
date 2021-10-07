@@ -1,7 +1,6 @@
 const currenciesReducer = (
   state = {
     currencies: [],
-    // prevCurrencies: []
   },
   action
 ) => {
@@ -9,10 +8,6 @@ const currenciesReducer = (
     case "SAVE_CURRENCIES":
       return {
         currencies: action.payload,
-        // prevCurrencies:
-        //   state.currencies.length !== 0
-        //     ? state.prevCurrencies.push(state.currencies)
-        //     : [],
       };
 
     default:

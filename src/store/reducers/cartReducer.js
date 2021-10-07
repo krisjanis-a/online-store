@@ -3,8 +3,6 @@ const cartReducer = (state = [], action) => {
 
   switch (action.type) {
     case "ADD_PRODUCT": {
-      // console.log("Adding product from product page");
-
       let newCartItem = action.payload;
       let newCartItemId = newCartItem.cartItemId;
       let cartItemExists = false;
@@ -32,8 +30,6 @@ const cartReducer = (state = [], action) => {
     }
 
     case "ADD_EXISTING_PRODUCT": {
-      // console.log("Adding existing product");
-
       let existingCartItemId = action.payload;
 
       newState = state.map((item) => {
@@ -50,8 +46,6 @@ const cartReducer = (state = [], action) => {
     }
 
     case "REMOVE_PRODUCT": {
-      // console.log("Removing existing product");
-
       let existingCartItemId = action.payload;
       newState = state
         .map((item) => {
