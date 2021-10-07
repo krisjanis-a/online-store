@@ -188,7 +188,7 @@ export class CategoryPageItem extends Component {
             </div>
           </Link>
         ) : (
-          <h3>Product loading...</h3>
+          <h3 style={{ margin: "2rem" }}>Product loading...</h3>
         )}
       </>
     );

@@ -392,7 +392,7 @@ export class ProductPage extends Component {
             </div>
           </div>
         ) : (
-          <h3>Product cannot be displayed</h3>
+          <h3 style={{ margin: "2rem" }}>Product cannot be displayed</h3>
         )}
       </>
     );

@@ -166,7 +166,7 @@ export class CartOverlayItem extends Component {
             </div>
           </>
         ) : (
-          <h4>Item cannot be displayed</h4>
+          <h4 style={{ margin: "1.5rem" }}>Item cannot be displayed</h4>
         )}
       </div>
     );

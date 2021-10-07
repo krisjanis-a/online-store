@@ -162,7 +162,7 @@ export class CartItem extends Component {
             </div>
           </>
         ) : (
-          <h3>Item cannot be displayed</h3>
+          <h3 style={{ margin: "1rem" }}>Item cannot be displayed</h3>
         )}
       </div>
     );
