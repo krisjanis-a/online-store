@@ -7,6 +7,7 @@ import CartPage from "./pages/CartPage/CartPage";
 import Navbar from "./components/Navbar/Navbar";
 import { connect } from "react-redux";
 import makeQuery from "./apolloClient";
+import ScrollToTop from "./ScrollToTop";
 class App extends Component {
   componentDidMount() {
     this.getCurrencies();
@@ -54,6 +55,7 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
+          <ScrollToTop />
           <Navbar />
           <Switch>
             <Route exact path="/">
