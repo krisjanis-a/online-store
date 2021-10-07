@@ -28,15 +28,13 @@ export class ProductPage extends Component {
 
   componentDidMount() {
     // console.log("Product page did mount");
-    if (Object.keys(this.state.product).length === 0) {
-      this.fetchProductById();
-    }
+    this.fetchProductById();
   }
 
   componentDidUpdate(prevProps, prevState) {
     // console.log("Product page did update");
 
-    // If no selected product present in props on component mounting
+    // If no selected product present in props (redux store) on component mounting - case where product is accessed from URL
     if (Object.keys(this.state.product).length === 0) {
       this.fetchProductById();
     }
@@ -56,6 +54,7 @@ export class ProductPage extends Component {
     // console.log("Product page will unmount");
     this.props.selectProduct(null);
   }
+
   fetchProductById() {
     const productIdQuery = `query {
       product(id: "${this.props.selectedProduct}") {
@@ -83,23 +82,39 @@ export class ProductPage extends Component {
       }
     }`;
 
-    console.log(productIdQuery);
+    // Check if product already exists in redux store
+    if (
+      this.props.products.length !== 0 &&
+      this.props.products.filter(
+        (item) => item.id === this.props.selectedProduct
+      ).length !== 0
+    ) {
+      let productInfo = this.props.products.filter(
+        (item) => item.id === this.props.selectedProduct
+      )[0];
 
-    makeQuery(productIdQuery).then((results) => {
-      if (results.product !== null) {
-        console.log("Selected product: " + this.props.selectedProduct);
-        console.log("Fetch product by id: " + results.product.name);
-        console.log(results.product.attributes[0].items);
-        console.log(results.product.prices);
+      this.setState({ product: productInfo });
+      this.setState({ prices: productInfo.prices });
+      this.setState({ attributes: productInfo.attributes });
+      this.setState({ images: productInfo.gallery });
+      this.setState({ mainImage: productInfo.gallery[0] });
+    }
 
-        let productInfo = results.product;
-        this.setState({ product: productInfo });
-        this.setState({ prices: productInfo.prices });
-        this.setState({ attributes: productInfo.attributes });
-        this.setState({ images: productInfo.gallery });
-        this.setState({ mainImage: productInfo.gallery[0] });
-      }
-    });
+    // If does not exist make a query and save product to store
+    else {
+      makeQuery(productIdQuery).then((results) => {
+        if (results.product !== null) {
+          let productInfo = results.product;
+          this.setState({ product: productInfo });
+          this.setState({ prices: productInfo.prices });
+          this.setState({ attributes: productInfo.attributes });
+          this.setState({ images: productInfo.gallery });
+          this.setState({ mainImage: productInfo.gallery[0] });
+
+          this.props.saveProduct(productInfo);
+        }
+      });
+    }
   }
 
   addDefaultValuesToCartItem() {
@@ -173,8 +188,6 @@ export class ProductPage extends Component {
     attributeType,
     attributeValue
   ) {
-    // console.log(`Attribute Id: ${attributeId} and value ${attributeValue}`);
-
     // Add new attribute to existing ones
     let newAttributes = this.state.cartItem.selectedAttributes.map(
       (attribute) => {
@@ -196,11 +209,6 @@ export class ProductPage extends Component {
       return `${attribute.name}-${attribute.displayValue}`;
     });
 
-    // console.log(this.state.cartItem.cartItemId);
-    // console.log(
-    //   `${this.state.cartItem.brand} ${this.state.cartItem.name} ${newCartItemIdAttributes}`
-    // );
-
     this.setState((prevState) => ({
       cartItem: {
         ...prevState.cartItem,
@@ -219,11 +227,11 @@ export class ProductPage extends Component {
       RUB: "₽",
     };
 
-    // console.log(this.state.attributes);
-
     return (
       <>
         {Object.keys(this.state.product).length !== 0 ? (
+          // &&
+          // this.state.cartItem.selectedAttributes.length !== 0
           <div className="product_page">
             <div className="image_choices">
               {this.state.images.map((imgURL) => (
@@ -262,15 +270,23 @@ export class ProductPage extends Component {
                         <>
                           {attributes.map((attribute) => {
                             // Setup for attribute comparison
+                            let selectedAttribute;
+                            let selectedAttributeName;
+                            let selectedAttributeValue;
 
-                            let selectedAttribute =
-                              this.state.cartItem.selectedAttributes.filter(
-                                (attribute) => attribute.name === attributeName
-                              )[0];
+                            if (
+                              this.state.cartItem.selectedAttributes.length !==
+                              0
+                            ) {
+                              selectedAttribute =
+                                this.state.cartItem.selectedAttributes.filter(
+                                  (attribute) =>
+                                    attribute.name === attributeName
+                                )[0];
 
-                            let selectedAttributeName = selectedAttribute.name;
-                            let selectedAttributeValue =
-                              selectedAttribute.value;
+                              selectedAttributeName = selectedAttribute.name;
+                              selectedAttributeValue = selectedAttribute.value;
+                            }
 
                             return (
                               // Add selected / unavailable to className to add styling
@@ -306,15 +322,22 @@ export class ProductPage extends Component {
                         <>
                           {attributes.map((attribute) => {
                             // Setup for attribute comparison
+                            let selectedAttribute;
+                            let selectedAttributeName;
+                            let selectedAttributeValue;
+                            if (
+                              this.state.cartItem.selectedAttributes.length !==
+                              0
+                            ) {
+                              selectedAttribute =
+                                this.state.cartItem.selectedAttributes.filter(
+                                  (attribute) =>
+                                    attribute.name === attributeName
+                                )[0];
 
-                            let selectedAttribute =
-                              this.state.cartItem.selectedAttributes.filter(
-                                (attribute) => attribute.name === attributeName
-                              )[0];
-
-                            let selectedAttributeName = selectedAttribute.name;
-                            let selectedAttributeValue =
-                              selectedAttribute.value;
+                              selectedAttributeName = selectedAttribute.name;
+                              selectedAttributeValue = selectedAttribute.value;
+                            }
 
                             return (
                               <button
@@ -379,6 +402,7 @@ export class ProductPage extends Component {
 const mapStateToProps = (state) => {
   return {
     selectedProduct: state.selectedProduct,
+    products: state.products,
     cartItems: state.cart,
     currency: state.currency,
   };
@@ -390,6 +414,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: "SELECT_PRODUCT",
         payload: productId,
+      });
+    },
+    saveProduct: (product) => {
+      dispatch({
+        type: "SAVE_PRODUCT",
+        payload: product,
       });
     },
     addToCart: (cartItem) => {

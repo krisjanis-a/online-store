@@ -17,15 +17,6 @@ class App extends Component {
   componentDidUpdate(prevProps) {
     // console.log("App component did update");
 
-    // Fetch & save categories
-    // if (prevProps.categories.categories.length === 0) {
-    //   this.getCategories();
-    // }
-    // Fetch & save currencies
-    // if (prevProps.currencies.currencies.length === 0) {
-    //   this.getCurrencies();
-    // }
-
     // Initial category set after mounting component
     if (prevProps.category === null) {
       if (this.props.categories.categories[0]) {
@@ -87,6 +78,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     selectedProduct: state.selectedProduct,
+    products: state.products,
     cartItems: state.cart,
     currency: state.currency,
     category: state.category,
