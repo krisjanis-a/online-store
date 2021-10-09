@@ -35,7 +35,7 @@ export class CategoryPage extends Component {
     }`;
     makeQuery(productsIdQuery).then((results) => {
       if (results.category !== null) {
-        let categoryProducts = results.category.products.map(
+        const categoryProducts = results.category.products.map(
           (product) => product.id
         );
 

@@ -22,5 +22,7 @@ html {
 body {
   font-family: "Raleway", sans-serif;
   color: var(--main-black);
+  max-width: 1440px;
+  margin: 0 auto;
 }
 /*# sourceMappingURL=index.css.map */

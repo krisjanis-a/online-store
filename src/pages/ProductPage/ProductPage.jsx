@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import makeQuery from "../../apolloClient";
 import "./ProductPage.css";
 import parse from "html-react-parser";
+import currencySymbols from "../../currencySymbols";
 
 export class ProductPage extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export class ProductPage extends Component {
       images: [],
       mainImage: null,
       cartItem: {
-        cartItemId: null, //brand+name+(attribute_displayValue)*nAttributes so it is possible to quickly find item and change quantity in cart
+        cartItemId: null, //brand+name+(attribute_displayValue) * nAttributes so it is possible to quickly find item and change quantity in cart
         productId: null, //for quick navigation (from cart or cart overlay) later if needed
         brand: null,
         name: null,
@@ -85,7 +86,7 @@ export class ProductPage extends Component {
         (item) => item.id === this.props.selectedProduct
       ).length !== 0
     ) {
-      let productInfo = this.props.products.filter(
+      const productInfo = this.props.products.filter(
         (item) => item.id === this.props.selectedProduct
       )[0];
 
@@ -100,7 +101,7 @@ export class ProductPage extends Component {
     else {
       makeQuery(productIdQuery).then((results) => {
         if (results.product !== null) {
-          let productInfo = results.product;
+          const productInfo = results.product;
           this.setState({ product: productInfo });
           this.setState({ prices: productInfo.prices });
           this.setState({ attributes: productInfo.attributes });
@@ -115,16 +116,18 @@ export class ProductPage extends Component {
 
   addDefaultValuesToCartItem() {
     // Create attribute section string for cartItemId
-    let attributesString = this.state.product.attributes.map((attributeSet) => {
-      return `${attributeSet.id}-${attributeSet.items[0].displayValue}`;
-    });
+    const attributesString = this.state.product.attributes.map(
+      (attributeSet) => {
+        return `${attributeSet.id}-${attributeSet.items[0].displayValue}`;
+      }
+    );
 
     // Create selected attributes array
-    let attributes = this.state.product.attributes.map((attributeSet) => {
-      let attributeSetId = attributeSet.id;
-      let attributeDisplayValue = attributeSet.items[0].displayValue;
-      let attributeType = attributeSet.type;
-      let attributeValue = attributeSet.items[0].value;
+    const attributes = this.state.product.attributes.map((attributeSet) => {
+      const attributeSetId = attributeSet.id;
+      const attributeDisplayValue = attributeSet.items[0].displayValue;
+      const attributeType = attributeSet.type;
+      const attributeValue = attributeSet.items[0].value;
       return {
         name: attributeSetId,
         displayValue: attributeDisplayValue,
@@ -134,7 +137,7 @@ export class ProductPage extends Component {
     });
 
     // Create default cart item
-    let defaultCartItem = {
+    const defaultCartItem = {
       cartItemId: `${this.state.product.brand} ${this.state.product.name} ${attributesString}`,
       productId: this.state.product.id,
       brand: this.state.product.brand,
@@ -152,19 +155,19 @@ export class ProductPage extends Component {
   //? This is for development, but maybe can leave for "production" if user wants to navigate to specific product through URL (though it's outside of intended app flow)
   getSelectedProductFromURL() {
     if (this.props.selectedProduct === null) {
-      let currentURL = window.location.href;
-      let phrase = /\/product:(.+)/;
-      let match = phrase.exec(currentURL)[1];
+      const currentURL = window.location.href;
+      const phrase = /\/product:(.+)/;
+      const match = phrase.exec(currentURL)[1];
       this.props.selectProduct(match);
     }
   }
 
   getPriceByCurrency() {
-    let priceObj = this.state.prices.filter(
+    const priceObj = this.state.prices.filter(
       (price) => price.currency === this.props.currency
     );
     if (priceObj[0]) {
-      let amount = priceObj[0].amount;
+      const amount = priceObj[0].amount;
       return amount;
     }
   }
@@ -182,7 +185,7 @@ export class ProductPage extends Component {
     attributeValue
   ) {
     // Add new attribute to existing ones
-    let newAttributes = this.state.cartItem.selectedAttributes.map(
+    const newAttributes = this.state.cartItem.selectedAttributes.map(
       (attribute) => {
         if (attribute.name === attributeId) {
           return {
@@ -198,7 +201,7 @@ export class ProductPage extends Component {
     );
 
     // Create new attribute string section for cartItemId
-    let newCartItemIdAttributes = newAttributes.map((attribute) => {
+    const newCartItemIdAttributes = newAttributes.map((attribute) => {
       return `${attribute.name}-${attribute.displayValue}`;
     });
 
@@ -212,14 +215,6 @@ export class ProductPage extends Component {
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <>
         {Object.keys(this.state.product).length !== 0 ? (
@@ -245,9 +240,9 @@ export class ProductPage extends Component {
 
               {/* ATTRIBUTE SETUP */}
               {this.state.attributes.map((attributeSet) => {
-                let attributeName = attributeSet.name;
-                let attributeType = attributeSet.type;
-                let attributes = attributeSet.items;
+                const attributeName = attributeSet.name;
+                const attributeType = attributeSet.type;
+                const attributes = attributeSet.items;
 
                 return (
                   <div

@@ -34,7 +34,9 @@ class App extends Component {
     const categoryQuery = "query { categories { name }}";
     if (this.props.categories.categories.length === 0) {
       makeQuery(categoryQuery).then((results) => {
-        let newCategories = results.categories.map((category) => category.name);
+        const newCategories = results.categories.map(
+          (category) => category.name
+        );
         this.props.saveCategories(newCategories);
       });
     }
@@ -45,7 +47,7 @@ class App extends Component {
     const currencyQuery = "query { currencies }";
     if (this.props.currencies.currencies.length === 0) {
       makeQuery(currencyQuery).then((results) => {
-        let newCurrencies = results.currencies.map((currency) => currency);
+        const newCurrencies = results.currencies.map((currency) => currency);
         this.props.saveCurrencies(newCurrencies);
       });
     }

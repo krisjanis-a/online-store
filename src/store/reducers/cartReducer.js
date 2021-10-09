@@ -3,15 +3,15 @@ const cartReducer = (state = [], action) => {
 
   switch (action.type) {
     case "ADD_PRODUCT": {
-      let newCartItem = action.payload;
-      let newCartItemId = newCartItem.cartItemId;
+      const newCartItem = action.payload;
+      const newCartItemId = newCartItem.cartItemId;
       let cartItemExists = false;
 
       newState = state.map((item) => {
         if (item.cartItemId === newCartItemId) {
           cartItemExists = true;
-          let currentQuantity = item.quantity;
-          let updatedItem = { ...item, quantity: currentQuantity + 1 };
+          const currentQuantity = item.quantity;
+          const updatedItem = { ...item, quantity: currentQuantity + 1 };
           return updatedItem;
         } else {
           return item;
@@ -30,12 +30,12 @@ const cartReducer = (state = [], action) => {
     }
 
     case "ADD_EXISTING_PRODUCT": {
-      let existingCartItemId = action.payload;
+      const existingCartItemId = action.payload;
 
       newState = state.map((item) => {
         if (item.cartItemId === existingCartItemId) {
-          let currentQuantity = item.quantity;
-          let updatedItem = { ...item, quantity: currentQuantity + 1 };
+          const currentQuantity = item.quantity;
+          const updatedItem = { ...item, quantity: currentQuantity + 1 };
           return updatedItem;
         } else {
           return item;
@@ -46,13 +46,13 @@ const cartReducer = (state = [], action) => {
     }
 
     case "REMOVE_PRODUCT": {
-      let existingCartItemId = action.payload;
+      const existingCartItemId = action.payload;
       newState = state
         .map((item) => {
           if (item.cartItemId === existingCartItemId) {
-            let currentQuantity = item.quantity;
+            const currentQuantity = item.quantity;
             if (currentQuantity > 1) {
-              let updatedItem = { ...item, quantity: currentQuantity - 1 };
+              const updatedItem = { ...item, quantity: currentQuantity - 1 };
               return updatedItem;
             } else {
               return null;

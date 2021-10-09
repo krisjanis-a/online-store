@@ -4,6 +4,7 @@ import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
 import CartOverlay from "../CartOverlay/CartOverlay";
 import "./Navbar.css";
 import { connect } from "react-redux";
+import currencySymbols from "../../currencySymbols";
 export class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -41,20 +42,11 @@ export class Navbar extends Component {
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <div
         className="navbar_container"
         style={{ position: "sticky", top: "0", zIndex: "30" }}
       >
-        {/* // <div> */}
         {this.state.showCartOverlay && (
           <div
             className="navbar_overlay_container"
@@ -182,23 +174,19 @@ export class Navbar extends Component {
                 )}
               </div>
 
-              <div className="currency_switcher_wrapper">
-                {this.state.showCurrencySwitcher ? (
+              {this.state.showCurrencySwitcher ? (
+                <div className="currency_switcher_wrapper">
                   <CurrencySwitcher
                     toggleCurrencySwitcher={this.toggleCurrencySwitcher}
                   />
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : null}
             </div>
 
             <div className="open_cart">
               {this.props.cartItems.length !== 0 ? (
                 <div className="item_count">{this.props.cartItems.length}</div>
-              ) : (
-                <></>
-              )}
+              ) : null}
               <div
                 className="cart_button"
                 onClick={() => {
@@ -228,13 +216,11 @@ export class Navbar extends Component {
                   />
                 </svg>
               </div>
-              <div className="cart_overlay_wrapper">
-                {this.state.showCartOverlay ? (
+              {this.state.showCartOverlay ? (
+                <div className="cart_overlay_wrapper">
                   <CartOverlay toggleCartOverlay={this.toggleCartOverlay} />
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import "./CartPage.css";
 import CartItem from "../../components/CartItem/CartItem";
 import { connect } from "react-redux";
+import currencySymbols from "../../currencySymbols";
 
 export class CartPage extends Component {
   calculateTotal() {
-    let total = this.props.cartItems.map(
+    const total = this.props.cartItems.map(
       (item) =>
         item.cartItem.prices.filter(
           (price) => price.currency === this.props.currency
@@ -15,14 +16,6 @@ export class CartPage extends Component {
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <div className="cart_page">
         <h1 className="page_title">CART</h1>

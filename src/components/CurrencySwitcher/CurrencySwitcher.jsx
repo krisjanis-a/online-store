@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./CurrencySwitcher.css";
+import currencySymbols from "../../currencySymbols";
 
 export class CurrencySwitcher extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export class CurrencySwitcher extends Component {
 
   clickInsideComponent(e) {
     e.stopPropagation();
-    let switcherButton = document.querySelector(".currency_button");
+    const switcherButton = document.querySelector(".currency_button");
     if (
       !this.currencySwitcherRef.current.contains(e.target) &&
       !switcherButton.contains(e.target)
@@ -38,14 +39,6 @@ export class CurrencySwitcher extends Component {
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <div className="currency_switcher" ref={this.currencySwitcherRef}>
         <ul className="currency_list">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./CartOverlay.css";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
 import { connect } from "react-redux";
+import currencySymbols from "../../currencySymbols";
 
 export class CartOverlay extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ export class CartOverlay extends Component {
 
   clickInsideComponent(e) {
     e.stopPropagation();
-    let cartButton = document.querySelector(".cart_button");
+    const cartButton = document.querySelector(".cart_button");
     if (
       !this.cartOverlayRef.current.contains(e.target) &&
       !cartButton.contains(e.target)
@@ -32,7 +33,7 @@ export class CartOverlay extends Component {
   }
 
   calculateTotal() {
-    let total = this.props.cartItems.map(
+    const total = this.props.cartItems.map(
       (item) =>
         item.cartItem.prices.filter(
           (price) => price.currency === this.props.currency
@@ -42,14 +43,6 @@ export class CartOverlay extends Component {
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <div
         className="cart_overlay"

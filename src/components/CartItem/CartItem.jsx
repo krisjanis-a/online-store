@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./CartItem.css";
 import { connect } from "react-redux";
+import currencySymbols from "../../currencySymbols";
 
 export class CartItem extends Component {
   constructor(props) {
@@ -21,11 +22,11 @@ export class CartItem extends Component {
   }
 
   getPriceByCurrency() {
-    let priceObj = this.state.item.cartItem.prices.filter(
+    const priceObj = this.state.item.cartItem.prices.filter(
       (price) => price.currency === this.props.currency
     );
     if (priceObj[0]) {
-      let amount = priceObj[0].amount;
+      const amount = priceObj[0].amount;
 
       return amount;
     }
@@ -60,14 +61,6 @@ export class CartItem extends Component {
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <div className="cart_item">
         {this.state.item !== null ? (

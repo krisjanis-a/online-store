@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import "./CategoryPageItem.css";
 import makeQuery from "../../apolloClient";
 import noImage from "../../assets/no_image_placeholder.jpg";
+import currencySymbols from "../../currencySymbols";
 
 export class CategoryPageItem extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export class CategoryPageItem extends Component {
     }`;
     makeQuery(productIdQuery).then((results) => {
       if (results.product !== null) {
-        let productInfo = results.product;
+        const productInfo = results.product;
         this.setState({ product: productInfo });
         this.setState({ prices: productInfo.prices });
       }
@@ -53,24 +54,16 @@ export class CategoryPageItem extends Component {
   }
 
   getPriceByCurrency() {
-    let priceObj = this.state.prices.filter(
+    const priceObj = this.state.prices.filter(
       (price) => price.currency === this.props.currency
     );
     if (priceObj[0]) {
-      let amount = priceObj[0].amount;
+      const amount = priceObj[0].amount;
       return amount;
     }
   }
 
   render() {
-    const currencySymbols = {
-      USD: "$",
-      GBP: "­£",
-      AUD: "$",
-      JPY: "¥",
-      RUB: "₽",
-    };
-
     return (
       <>
         {Object.keys(this.state.product).length !== 0 ? (
