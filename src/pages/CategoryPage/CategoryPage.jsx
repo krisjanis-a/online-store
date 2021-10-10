@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./CategoryPage.css";
 import Item from "../../components/CategoryPageItem/CategoryPageItem";
-import makeQuery from "../../apolloClient";
+import fetchProductsByCategory from "./fetchProductsByCategory";
 
 export class CategoryPage extends Component {
   constructor(props) {
@@ -14,34 +14,15 @@ export class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    this.fetchProductsById();
+    this.fetchProductsByCategory = fetchProductsByCategory.bind(this);
+    this.fetchProductsByCategory();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.category !== prevProps.category) {
-      this.fetchProductsById();
+      this.fetchProductsByCategory = fetchProductsByCategory.bind(this);
+      this.fetchProductsByCategory();
     }
-  }
-
-  // Fetch products from category
-  fetchProductsById() {
-    const productsIdQuery = `query {
-      category(input:{title:"${this.props.category}"}){
-        name 
-         products {
-          id 
-        }
-      }
-    }`;
-    makeQuery(productsIdQuery).then((results) => {
-      if (results.category !== null) {
-        const categoryProducts = results.category.products.map(
-          (product) => product.id
-        );
-
-        this.setState({ productsId: categoryProducts });
-      }
-    });
   }
 
   render() {
