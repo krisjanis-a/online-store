@@ -6,7 +6,7 @@ const apolloClient = new ApolloClient({
 });
 
 const makeQuery = async (queryObject) => {
-  let response = await apolloClient.query({
+  const response = await apolloClient.query({
     query: gql`
       ${queryObject}
     `,
