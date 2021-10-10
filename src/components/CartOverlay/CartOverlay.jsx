@@ -4,6 +4,7 @@ import "./CartOverlay.css";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
+import calculateTotal from "../../utils/calculateTotal";
 
 export class CartOverlay extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export class CartOverlay extends Component {
     this.cartOverlayRef = React.createRef();
 
     this.clickInsideComponent = this.clickInsideComponent.bind(this);
+    this.calculateTotal = calculateTotal.bind(this);
   }
 
   componentDidMount() {
@@ -30,16 +32,6 @@ export class CartOverlay extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("mousedown", this.clickInsideComponent);
-  }
-
-  calculateTotal() {
-    const total = this.props.cartItems.map(
-      (item) =>
-        item.cartItem.prices.filter(
-          (price) => price.currency === this.props.currency
-        )[0].amount * item.quantity
-    );
-    return Number.parseFloat(total.reduce((a, b) => a + b)).toFixed(2);
   }
 
   render() {

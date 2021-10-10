@@ -3,16 +3,12 @@ import "./CartPage.css";
 import CartItem from "../../components/CartItem/CartItem";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
+import calculateTotal from "../../utils/calculateTotal";
 
 export class CartPage extends Component {
-  calculateTotal() {
-    const total = this.props.cartItems.map(
-      (item) =>
-        item.cartItem.prices.filter(
-          (price) => price.currency === this.props.currency
-        )[0].amount * item.quantity
-    );
-    return Number.parseFloat(total.reduce((a, b) => a + b)).toFixed(2);
+  constructor(props) {
+    super(props);
+    this.calculateTotal = calculateTotal.bind(this);
   }
 
   render() {
