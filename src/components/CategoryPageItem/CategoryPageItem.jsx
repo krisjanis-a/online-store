@@ -49,8 +49,7 @@ export class CategoryPageItem extends Component {
     makeQuery(productIdQuery).then((results) => {
       if (results.product !== null) {
         const productInfo = results.product;
-        this.setState({ product: productInfo });
-        this.setState({ prices: productInfo.prices });
+        this.setState({ product: productInfo, prices: productInfo.prices });
       }
     });
   }

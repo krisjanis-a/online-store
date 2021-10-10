@@ -90,11 +90,13 @@ export class ProductPage extends Component {
         (item) => item.id === this.props.selectedProduct
       )[0];
 
-      this.setState({ product: productInfo });
-      this.setState({ prices: productInfo.prices });
-      this.setState({ attributes: productInfo.attributes });
-      this.setState({ images: productInfo.gallery });
-      this.setState({ mainImage: productInfo.gallery[0] });
+      this.setState({
+        product: productInfo,
+        prices: productInfo.prices,
+        attributes: productInfo.attributes,
+        images: productInfo.gallery,
+        mainImage: productInfo.gallery[0],
+      });
     }
 
     // If does not exist make a query and save product to store
@@ -102,11 +104,13 @@ export class ProductPage extends Component {
       makeQuery(productIdQuery).then((results) => {
         if (results.product !== null) {
           const productInfo = results.product;
-          this.setState({ product: productInfo });
-          this.setState({ prices: productInfo.prices });
-          this.setState({ attributes: productInfo.attributes });
-          this.setState({ images: productInfo.gallery });
-          this.setState({ mainImage: productInfo.gallery[0] });
+          this.setState({
+            product: productInfo,
+            prices: productInfo.prices,
+            attributes: productInfo.attributes,
+            images: productInfo.gallery,
+            mainImage: productInfo.gallery[0],
+          });
 
           this.props.saveProduct(productInfo);
         }
