@@ -6,13 +6,15 @@ import CategoryPage from "../pages/CategoryPage/CategoryPage";
 import CartPage from "../pages/CartPage/CartPage";
 import Navbar from "../components/Navbar/Navbar";
 import { connect } from "react-redux";
-import makeQuery from "../utils/apolloClient";
 import ScrollToTop from "./ScrollToTop";
+import { getCategories, getCurrencies } from "./initializationQueries";
 
 class App extends Component {
   componentDidMount() {
-    this.getCurrencies();
+    this.getCategories = getCategories.bind(this);
     this.getCategories();
+    this.getCurrencies = getCurrencies.bind(this);
+    this.getCurrencies();
   }
 
   componentDidUpdate(prevProps) {
@@ -27,30 +29,6 @@ class App extends Component {
       if (this.props.currencies.currencies[0]) {
         this.props.setCurrency(this.props.currencies.currencies[0]);
       }
-    }
-  }
-
-  // Fetch categories
-  getCategories() {
-    const categoryQuery = "query { categories { name }}";
-    if (this.props.categories.categories.length === 0) {
-      makeQuery(categoryQuery).then((results) => {
-        const newCategories = results.categories.map(
-          (category) => category.name
-        );
-        this.props.saveCategories(newCategories);
-      });
-    }
-  }
-
-  // Fetch currencies
-  getCurrencies() {
-    const currencyQuery = "query { currencies }";
-    if (this.props.currencies.currencies.length === 0) {
-      makeQuery(currencyQuery).then((results) => {
-        const newCurrencies = results.currencies.map((currency) => currency);
-        this.props.saveCurrencies(newCurrencies);
-      });
     }
   }
 
