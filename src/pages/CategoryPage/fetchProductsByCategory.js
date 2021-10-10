@@ -1,4 +1,4 @@
-import makeQuery from "../../apolloClient";
+import makeQuery from "../../utils/apolloClient";
 
 export default function fetchProductsByCategory() {
   const productsIdQuery = `query {

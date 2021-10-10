@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./CartPage.css";
 import CartItem from "../../components/CartItem/CartItem";
 import { connect } from "react-redux";
-import currencySymbols from "../../currencySymbols";
+import currencySymbols from "../../utils/currencySymbols";
 
 export class CartPage extends Component {
   calculateTotal() {

@@ -4,9 +4,9 @@ import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
 import CartOverlay from "../CartOverlay/CartOverlay";
 import "./Navbar.css";
 import { connect } from "react-redux";
-import currencySymbols from "../../currencySymbols";
+import currencySymbols from "../../utils/currencySymbols";
 import parse from "html-react-parser";
-import { arrowUp, arrowDown, returnHome, cartIcon } from "../../iconSVGs";
+import { arrowUp, arrowDown, returnHome, cartIcon } from "../../utils/iconSVGs";
 
 export class Navbar extends Component {
   constructor(props) {

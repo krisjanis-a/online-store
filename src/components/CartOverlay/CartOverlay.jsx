@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./CartOverlay.css";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
 import { connect } from "react-redux";
-import currencySymbols from "../../currencySymbols";
+import currencySymbols from "../../utils/currencySymbols";
 
 export class CartOverlay extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./CartItem.css";
 import { connect } from "react-redux";
-import currencySymbols from "../../currencySymbols";
+import currencySymbols from "../../utils/currencySymbols";
 
 export class CartItem extends Component {
   constructor(props) {

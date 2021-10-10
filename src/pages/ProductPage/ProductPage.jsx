@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./ProductPage.css";
 import parse from "html-react-parser";
-import currencySymbols from "../../currencySymbols";
+import currencySymbols from "../../utils/currencySymbols";
 import fetchProductById from "./fetchProductById";
 
 export class ProductPage extends Component {

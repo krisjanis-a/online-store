@@ -1,13 +1,14 @@
 import "./App.css";
 import { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ProductPage from "./pages/ProductPage/ProductPage";
-import CategoryPage from "./pages/CategoryPage/CategoryPage";
-import CartPage from "./pages/CartPage/CartPage";
-import Navbar from "./components/Navbar/Navbar";
+import ProductPage from "../pages/ProductPage/ProductPage";
+import CategoryPage from "../pages/CategoryPage/CategoryPage";
+import CartPage from "../pages/CartPage/CartPage";
+import Navbar from "../components/Navbar/Navbar";
 import { connect } from "react-redux";
-import makeQuery from "./apolloClient";
+import makeQuery from "../utils/apolloClient";
 import ScrollToTop from "./ScrollToTop";
+
 class App extends Component {
   componentDidMount() {
     this.getCurrencies();

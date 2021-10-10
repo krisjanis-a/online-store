@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "./CategoryPageItem.css";
 import noImage from "../../assets/no_image_placeholder.jpg";
-import currencySymbols from "../../currencySymbols";
+import currencySymbols from "../../utils/currencySymbols";
 import parse from "html-react-parser";
-import { cartIconGreen } from "../../iconSVGs";
+import { cartIconGreen } from "../../utils/iconSVGs";
 import fetchProductById from "./fetchProductById";
 
 export class CategoryPageItem extends Component {
