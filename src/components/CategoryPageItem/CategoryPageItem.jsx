@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "./CategoryPageItem.css";
-import makeQuery from "../../apolloClient";
 import noImage from "../../assets/no_image_placeholder.jpg";
 import currencySymbols from "../../currencySymbols";
 import parse from "html-react-parser";
 import { cartIconGreen } from "../../iconSVGs";
+import fetchProductById from "./fetchProductById";
 
 export class CategoryPageItem extends Component {
   constructor(props) {
@@ -22,36 +22,16 @@ export class CategoryPageItem extends Component {
 
   componentDidMount() {
     if (Object.keys(this.state.product).length === 0) {
+      this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
     }
   }
 
   componentDidUpdate() {
     if (Object.keys(this.state.product).length === 0) {
+      this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
     }
-  }
-
-  fetchProductById() {
-    const productIdQuery = `query {
-      product(id: "${this.props.productId}") {
-        id
-        name
-        inStock
-        gallery
-        prices {
-          currency
-          amount
-        }
-        brand
-      }
-    }`;
-    makeQuery(productIdQuery).then((results) => {
-      if (results.product !== null) {
-        const productInfo = results.product;
-        this.setState({ product: productInfo, prices: productInfo.prices });
-      }
-    });
   }
 
   getPriceByCurrency() {
@@ -75,6 +55,7 @@ export class CategoryPageItem extends Component {
             }}
 
             //? If needed to disallow access to product page of out-of-stock product => should change cursor in scss file too then
+            //
             // to={
             //   this.state.product.inStock
             //     ? `/product:${this.state.product.id}`

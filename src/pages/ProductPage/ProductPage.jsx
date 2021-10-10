@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import makeQuery from "../../apolloClient";
 import "./ProductPage.css";
 import parse from "html-react-parser";
 import currencySymbols from "../../currencySymbols";
-import fetchProductById from "../../utils/fetchProductById";
+import fetchProductById from "./fetchProductById";
 
 export class ProductPage extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
-import makeQuery from "../apolloClient";
+import makeQuery from "../../apolloClient";
 
-function fetchProductById() {
+export default function fetchProductById() {
   const productIdQuery = `query {
       product(id: "${this.props.selectedProduct}") {
         id
@@ -64,5 +64,3 @@ function fetchProductById() {
     });
   }
 }
-
-export default fetchProductById;
