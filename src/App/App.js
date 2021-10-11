@@ -18,6 +18,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    this.initializeProps(prevProps);
+  }
+
+  initializeProps(prevProps) {
     // Initial category set after mounting component
     if (prevProps.category === null) {
       if (this.props.categories.categories[0]) {
