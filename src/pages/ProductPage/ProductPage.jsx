@@ -223,99 +223,6 @@ export class ProductPage extends PureComponent {
         >
           <h3 className="attribute_name">{attributeName}:</h3>
           {this.renderAttributes(attributeName, attributeType, attributes)}
-          {/* <div className="attribute_choices">
-            {attributeType === "text" && (
-              <>
-                {attributes.map((attribute) => {
-                  // Setup for attribute comparison
-                  let selectedAttribute;
-                  let selectedAttributeName;
-                  let selectedAttributeValue;
-
-                  if (this.state.cartItem.selectedAttributes.length !== 0) {
-                    selectedAttribute =
-                      this.state.cartItem.selectedAttributes.filter(
-                        (attribute) => attribute.name === attributeName
-                      )[0];
-
-                    selectedAttributeName = selectedAttribute.name;
-                    selectedAttributeValue = selectedAttribute.value;
-                  }
-
-                  return (
-                    // Add selected / unavailable to className to add styling
-                    <button
-                      className={`attribute_option 
-                      
-                      ${
-                        selectedAttributeName === attributeName &&
-                        selectedAttributeValue === attribute.value
-                          ? "selected"
-                          : ""
-                      }
-                      
-                      `}
-                      title={attribute.displayValue}
-                      key={attribute.id}
-                      onClick={() =>
-                        this.updateAttributes(
-                          attributeName,
-                          attribute.displayValue,
-                          attributeType,
-                          attribute.value
-                        )
-                      }
-                    >
-                      {attribute.value}
-                    </button>
-                  );
-                })}
-              </>
-            )}
-            {attributeType === "swatch" && (
-              <>
-                {attributes.map((attribute) => {
-                  // Setup for attribute comparison
-                  let selectedAttribute;
-                  let selectedAttributeName;
-                  let selectedAttributeValue;
-                  if (this.state.cartItem.selectedAttributes.length !== 0) {
-                    selectedAttribute =
-                      this.state.cartItem.selectedAttributes.filter(
-                        (attribute) => attribute.name === attributeName
-                      )[0];
-
-                    selectedAttributeName = selectedAttribute.name;
-                    selectedAttributeValue = selectedAttribute.value;
-                  }
-
-                  return (
-                    <button
-                      className={`attribute_option ${attributeType} ${
-                        selectedAttributeName === attributeName &&
-                        selectedAttributeValue === attribute.value
-                          ? "selected"
-                          : ""
-                      }`}
-                      style={{
-                        backgroundColor: `${attribute.value}`,
-                      }}
-                      title={attribute.displayValue}
-                      key={attribute.id}
-                      onClick={() =>
-                        this.updateAttributes(
-                          attributeName,
-                          attribute.displayValue,
-                          attributeType,
-                          attribute.value
-                        )
-                      }
-                    ></button>
-                  );
-                })}
-              </>
-            )}
-          </div> */}
         </div>
       );
     });
@@ -324,97 +231,53 @@ export class ProductPage extends PureComponent {
   renderAttributes(attributeName, attributeType, attributes) {
     return (
       <div className="attribute_choices">
-        {attributeType === "text" && (
-          <>
-            {attributes.map((attribute) => {
-              // Setup for attribute comparison
-              let selectedAttribute;
-              let selectedAttributeName;
-              let selectedAttributeValue;
+        {attributes.map((attribute) => {
+          // Setup for attribute comparison
+          let selectedAttribute;
+          let selectedAttributeName;
+          let selectedAttributeValue;
 
-              if (this.state.cartItem.selectedAttributes.length !== 0) {
-                selectedAttribute =
-                  this.state.cartItem.selectedAttributes.filter(
-                    (attribute) => attribute.name === attributeName
-                  )[0];
+          if (this.state.cartItem.selectedAttributes.length !== 0) {
+            selectedAttribute = this.state.cartItem.selectedAttributes.filter(
+              (attribute) => attribute.name === attributeName
+            )[0];
 
-                selectedAttributeName = selectedAttribute.name;
-                selectedAttributeValue = selectedAttribute.value;
+            selectedAttributeName = selectedAttribute.name;
+            selectedAttributeValue = selectedAttribute.value;
+          }
+
+          return (
+            // Add selected / unavailable to className to add styling
+            <button
+              className={`attribute_option 
+                    ${attributeType === "swatch" ? "swatch" : ""}
+                    ${
+                      selectedAttributeName === attributeName &&
+                      selectedAttributeValue === attribute.value
+                        ? "selected"
+                        : ""
+                    }
+                  `}
+              style={{
+                backgroundColor: `${
+                  attributeType === "swatch" && attribute.value
+                }`,
+              }}
+              title={attribute.displayValue}
+              key={attribute.id}
+              onClick={() =>
+                this.updateAttributes(
+                  attributeName,
+                  attribute.displayValue,
+                  attributeType,
+                  attribute.value
+                )
               }
-
-              return (
-                // Add selected / unavailable to className to add styling
-                <button
-                  className={`attribute_option 
-                      
-                      ${
-                        selectedAttributeName === attributeName &&
-                        selectedAttributeValue === attribute.value
-                          ? "selected"
-                          : ""
-                      }
-                      
-                      `}
-                  title={attribute.displayValue}
-                  key={attribute.id}
-                  onClick={() =>
-                    this.updateAttributes(
-                      attributeName,
-                      attribute.displayValue,
-                      attributeType,
-                      attribute.value
-                    )
-                  }
-                >
-                  {attribute.value}
-                </button>
-              );
-            })}
-          </>
-        )}
-        {attributeType === "swatch" && (
-          <>
-            {attributes.map((attribute) => {
-              // Setup for attribute comparison
-              let selectedAttribute;
-              let selectedAttributeName;
-              let selectedAttributeValue;
-              if (this.state.cartItem.selectedAttributes.length !== 0) {
-                selectedAttribute =
-                  this.state.cartItem.selectedAttributes.filter(
-                    (attribute) => attribute.name === attributeName
-                  )[0];
-
-                selectedAttributeName = selectedAttribute.name;
-                selectedAttributeValue = selectedAttribute.value;
-              }
-
-              return (
-                <button
-                  className={`attribute_option ${attributeType} ${
-                    selectedAttributeName === attributeName &&
-                    selectedAttributeValue === attribute.value
-                      ? "selected"
-                      : ""
-                  }`}
-                  style={{
-                    backgroundColor: `${attribute.value}`,
-                  }}
-                  title={attribute.displayValue}
-                  key={attribute.id}
-                  onClick={() =>
-                    this.updateAttributes(
-                      attributeName,
-                      attribute.displayValue,
-                      attributeType,
-                      attribute.value
-                    )
-                  }
-                ></button>
-              );
-            })}
-          </>
-        )}
+            >
+              {attributeType === "text" && attribute.value}
+            </button>
+          );
+        })}
       </div>
     );
   }
