@@ -54,56 +54,73 @@ export class CategoryPageItem extends PureComponent {
               this.props.selectProduct(this.state.product.id);
             }}
 
-            //? If needed to disallow access to product page of out-of-stock product => should change cursor in scss file too then
-            //
-            // to={
-            //   this.state.product.inStock
-            //     ? `/product:${this.state.product.id}`
-            //     : "/"
-            // }
-            // onClick={() => {
-            //   this.state.product.inStock &&
-            //     this.props.selectProduct(this.state.product.id);
-            // }}
+            /* 
+              ? If needed to disallow access to product page of out-of-stock product => should change cursor in scss file too then
+              to={
+                this.state.product.inStock
+                  ? `/product:${this.state.product.id}`
+                  : "/"
+              }
+              onClick={() => {
+                this.state.product.inStock &&
+                  this.props.selectProduct(this.state.product.id);
+              }} 
+            */
           >
             <div
-              // add out-of-stock to category_page_item className to enable styling for out of stock products
               className={`category_page_item ${
                 !this.state.product.inStock ? "out-of-stock" : ""
               }`}
             >
-              <div className="image_field">
-                <span>OUT OF STOCK</span>
-                <img
-                  className="item_image"
-                  src={
-                    this.state.product.gallery
-                      ? this.state.product.gallery[0]
-                      : { noImage }
-                  }
-                  alt=""
-                />
-              </div>
-              <div className="add-to-cart_button_container">
-                <div className="button">
-                  {/* SHOPPING CART ICON */}
-                  {parse(cartIconGreen)}
-                </div>
-              </div>
-              <p className="item_name">
-                {this.state.product.brand + " " + this.state.product.name}
-              </p>
-              <p className="item_price">
-                {currencySymbols[this.props.currency] +
-                  " " +
-                  this.getPriceByCurrency()}
-              </p>
+              {this.renderImage()}
+              {this.renderIcon()}
+              {this.renderText()}
             </div>
           </Link>
         ) : (
           <h3 style={{ margin: "2rem" }}>Product loading...</h3>
         )}
       </>
+    );
+  }
+
+  renderImage() {
+    return (
+      <div className="image_field">
+        <span>OUT OF STOCK</span>
+        <img
+          className="item_image"
+          src={
+            this.state.product.gallery
+              ? this.state.product.gallery[0]
+              : { noImage }
+          }
+          alt=""
+        />
+      </div>
+    );
+  }
+
+  renderIcon() {
+    return (
+      <div className="cart_icon_container">
+        <div className="icon">{parse(cartIconGreen)}</div>
+      </div>
+    );
+  }
+
+  renderText() {
+    return (
+      <div className="text">
+        <p className="item_name">
+          {this.state.product.brand + " " + this.state.product.name}
+        </p>
+        <p className="item_price">
+          {currencySymbols[this.props.currency] +
+            " " +
+            this.getPriceByCurrency()}
+        </p>
+      </div>
     );
   }
 }

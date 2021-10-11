@@ -41,21 +41,33 @@ export class CurrencySwitcher extends PureComponent {
   render() {
     return (
       <div className="currency_switcher" ref={this.currencySwitcherRef}>
-        <ul className="currency_list">
-          {this.props.currencies.currencies.map((currency) => (
-            <li
-              className="currency_item"
-              key={currency}
-              onClick={() => {
-                this.setNewCurrency(currency);
-                this.props.toggleCurrencySwitcher();
-              }}
-            >
-              {`${currencySymbols[currency]} ${currency}`}
-            </li>
-          ))}
-        </ul>
+        {this.renderCurrencyList()}
       </div>
+    );
+  }
+
+  renderCurrencyList() {
+    return (
+      <ul className="currency_list">
+        {this.props.currencies.currencies.map((currency) =>
+          this.renderCurrency(currency)
+        )}
+      </ul>
+    );
+  }
+
+  renderCurrency(currency) {
+    return (
+      <li
+        className="currency_item"
+        key={currency}
+        onClick={() => {
+          this.setNewCurrency(currency);
+          this.props.toggleCurrencySwitcher();
+        }}
+      >
+        {`${currencySymbols[currency]} ${currency}`}
+      </li>
     );
   }
 }

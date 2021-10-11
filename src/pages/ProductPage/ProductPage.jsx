@@ -159,166 +159,296 @@ export class ProductPage extends PureComponent {
       <>
         {Object.keys(this.state.product).length !== 0 ? (
           <div className="product_page">
-            <div className="image_choices">
-              {this.state.images.map((imgURL) => (
-                <div className="image_option" key={imgURL}>
-                  <img
-                    src={imgURL}
-                    alt=""
-                    onClick={() => this.setMainImage(imgURL)}
-                  />
-                </div>
-              ))}
-            </div>
+            {this.renderImageOptions()}
+            {this.renderMainImage()}
 
-            <div className="main_image">
-              <img src={this.state.mainImage} alt="" />
-            </div>
             <div className="product_info">
-              <h2 className="brand_title">{this.state.product.brand}</h2>
-              <h2 className="product_title">{this.state.product.name}</h2>
-
-              {/* ATTRIBUTE SETUP */}
-              {this.state.attributes.map((attributeSet) => {
-                const attributeName = attributeSet.name;
-                const attributeType = attributeSet.type;
-                const attributes = attributeSet.items;
-
-                return (
-                  <div
-                    className="attribute_field"
-                    key={attributeName + attributes[0].value}
-                  >
-                    <h3 className="attribute_name">{attributeName}:</h3>
-                    <div className="attribute_choices">
-                      {attributeType === "text" && (
-                        <>
-                          {attributes.map((attribute) => {
-                            // Setup for attribute comparison
-                            let selectedAttribute;
-                            let selectedAttributeName;
-                            let selectedAttributeValue;
-
-                            if (
-                              this.state.cartItem.selectedAttributes.length !==
-                              0
-                            ) {
-                              selectedAttribute =
-                                this.state.cartItem.selectedAttributes.filter(
-                                  (attribute) =>
-                                    attribute.name === attributeName
-                                )[0];
-
-                              selectedAttributeName = selectedAttribute.name;
-                              selectedAttributeValue = selectedAttribute.value;
-                            }
-
-                            return (
-                              // Add selected / unavailable to className to add styling
-                              <button
-                                className={`attribute_option 
-                              
-                              ${
-                                selectedAttributeName === attributeName &&
-                                selectedAttributeValue === attribute.value
-                                  ? "selected"
-                                  : ""
-                              }
-                              
-                              `}
-                                title={attribute.displayValue}
-                                key={attribute.id}
-                                onClick={() =>
-                                  this.updateAttributes(
-                                    attributeName,
-                                    attribute.displayValue,
-                                    attributeType,
-                                    attribute.value
-                                  )
-                                }
-                              >
-                                {attribute.value}
-                              </button>
-                            );
-                          })}
-                        </>
-                      )}
-                      {attributeType === "swatch" && (
-                        <>
-                          {attributes.map((attribute) => {
-                            // Setup for attribute comparison
-                            let selectedAttribute;
-                            let selectedAttributeName;
-                            let selectedAttributeValue;
-                            if (
-                              this.state.cartItem.selectedAttributes.length !==
-                              0
-                            ) {
-                              selectedAttribute =
-                                this.state.cartItem.selectedAttributes.filter(
-                                  (attribute) =>
-                                    attribute.name === attributeName
-                                )[0];
-
-                              selectedAttributeName = selectedAttribute.name;
-                              selectedAttributeValue = selectedAttribute.value;
-                            }
-
-                            return (
-                              <button
-                                className={`attribute_option ${attributeType} ${
-                                  selectedAttributeName === attributeName &&
-                                  selectedAttributeValue === attribute.value
-                                    ? "selected"
-                                    : ""
-                                }`}
-                                style={{
-                                  backgroundColor: `${attribute.value}`,
-                                }}
-                                title={attribute.displayValue}
-                                key={attribute.id}
-                                onClick={() =>
-                                  this.updateAttributes(
-                                    attributeName,
-                                    attribute.displayValue,
-                                    attributeType,
-                                    attribute.value
-                                  )
-                                }
-                              ></button>
-                            );
-                          })}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-
-              <div className="price_field">
-                <h3 className="title">PRICE:</h3>
-                <h3 className="price">
-                  {currencySymbols[this.props.currency] +
-                    " " +
-                    this.getPriceByCurrency()}
-                </h3>
-              </div>
-              <button
-                className="add_to_cart"
-                disabled={!this.state.product.inStock}
-                onClick={() => this.props.addToCart(this.state.cartItem)}
-              >
-                ADD TO CART
-              </button>
-              <div className="description_field">
-                {parse(this.state.product.description)}
-              </div>
+              {this.renderText()}
+              {this.renderAttributesField()}
+              {this.renderPriceField()}
+              {this.renderButton()}
+              {this.renderDescription()}
             </div>
           </div>
         ) : (
           <h3 style={{ margin: "2rem" }}>Product cannot be displayed</h3>
         )}
       </>
+    );
+  }
+
+  renderImageOptions() {
+    return (
+      <div className="image_choices">
+        {this.state.images.map((imgURL) => (
+          <div className="image_option" key={imgURL}>
+            <img
+              src={imgURL}
+              alt=""
+              onClick={() => this.setMainImage(imgURL)}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  renderMainImage() {
+    return (
+      <div className="main_image">
+        <img src={this.state.mainImage} alt="" />
+      </div>
+    );
+  }
+
+  renderText() {
+    return (
+      <div className="text">
+        <h2 className="brand_title">{this.state.product.brand}</h2>
+        <h2 className="product_title">{this.state.product.name}</h2>
+      </div>
+    );
+  }
+
+  renderAttributesField() {
+    return this.state.attributes.map((attributeSet) => {
+      const attributeName = attributeSet.name;
+      const attributeType = attributeSet.type;
+      const attributes = attributeSet.items;
+
+      return (
+        <div
+          className="attribute_field"
+          key={attributeName + attributes[0].value}
+        >
+          <h3 className="attribute_name">{attributeName}:</h3>
+          {this.renderAttributes(attributeName, attributeType, attributes)}
+          {/* <div className="attribute_choices">
+            {attributeType === "text" && (
+              <>
+                {attributes.map((attribute) => {
+                  // Setup for attribute comparison
+                  let selectedAttribute;
+                  let selectedAttributeName;
+                  let selectedAttributeValue;
+
+                  if (this.state.cartItem.selectedAttributes.length !== 0) {
+                    selectedAttribute =
+                      this.state.cartItem.selectedAttributes.filter(
+                        (attribute) => attribute.name === attributeName
+                      )[0];
+
+                    selectedAttributeName = selectedAttribute.name;
+                    selectedAttributeValue = selectedAttribute.value;
+                  }
+
+                  return (
+                    // Add selected / unavailable to className to add styling
+                    <button
+                      className={`attribute_option 
+                      
+                      ${
+                        selectedAttributeName === attributeName &&
+                        selectedAttributeValue === attribute.value
+                          ? "selected"
+                          : ""
+                      }
+                      
+                      `}
+                      title={attribute.displayValue}
+                      key={attribute.id}
+                      onClick={() =>
+                        this.updateAttributes(
+                          attributeName,
+                          attribute.displayValue,
+                          attributeType,
+                          attribute.value
+                        )
+                      }
+                    >
+                      {attribute.value}
+                    </button>
+                  );
+                })}
+              </>
+            )}
+            {attributeType === "swatch" && (
+              <>
+                {attributes.map((attribute) => {
+                  // Setup for attribute comparison
+                  let selectedAttribute;
+                  let selectedAttributeName;
+                  let selectedAttributeValue;
+                  if (this.state.cartItem.selectedAttributes.length !== 0) {
+                    selectedAttribute =
+                      this.state.cartItem.selectedAttributes.filter(
+                        (attribute) => attribute.name === attributeName
+                      )[0];
+
+                    selectedAttributeName = selectedAttribute.name;
+                    selectedAttributeValue = selectedAttribute.value;
+                  }
+
+                  return (
+                    <button
+                      className={`attribute_option ${attributeType} ${
+                        selectedAttributeName === attributeName &&
+                        selectedAttributeValue === attribute.value
+                          ? "selected"
+                          : ""
+                      }`}
+                      style={{
+                        backgroundColor: `${attribute.value}`,
+                      }}
+                      title={attribute.displayValue}
+                      key={attribute.id}
+                      onClick={() =>
+                        this.updateAttributes(
+                          attributeName,
+                          attribute.displayValue,
+                          attributeType,
+                          attribute.value
+                        )
+                      }
+                    ></button>
+                  );
+                })}
+              </>
+            )}
+          </div> */}
+        </div>
+      );
+    });
+  }
+
+  renderAttributes(attributeName, attributeType, attributes) {
+    return (
+      <div className="attribute_choices">
+        {attributeType === "text" && (
+          <>
+            {attributes.map((attribute) => {
+              // Setup for attribute comparison
+              let selectedAttribute;
+              let selectedAttributeName;
+              let selectedAttributeValue;
+
+              if (this.state.cartItem.selectedAttributes.length !== 0) {
+                selectedAttribute =
+                  this.state.cartItem.selectedAttributes.filter(
+                    (attribute) => attribute.name === attributeName
+                  )[0];
+
+                selectedAttributeName = selectedAttribute.name;
+                selectedAttributeValue = selectedAttribute.value;
+              }
+
+              return (
+                // Add selected / unavailable to className to add styling
+                <button
+                  className={`attribute_option 
+                      
+                      ${
+                        selectedAttributeName === attributeName &&
+                        selectedAttributeValue === attribute.value
+                          ? "selected"
+                          : ""
+                      }
+                      
+                      `}
+                  title={attribute.displayValue}
+                  key={attribute.id}
+                  onClick={() =>
+                    this.updateAttributes(
+                      attributeName,
+                      attribute.displayValue,
+                      attributeType,
+                      attribute.value
+                    )
+                  }
+                >
+                  {attribute.value}
+                </button>
+              );
+            })}
+          </>
+        )}
+        {attributeType === "swatch" && (
+          <>
+            {attributes.map((attribute) => {
+              // Setup for attribute comparison
+              let selectedAttribute;
+              let selectedAttributeName;
+              let selectedAttributeValue;
+              if (this.state.cartItem.selectedAttributes.length !== 0) {
+                selectedAttribute =
+                  this.state.cartItem.selectedAttributes.filter(
+                    (attribute) => attribute.name === attributeName
+                  )[0];
+
+                selectedAttributeName = selectedAttribute.name;
+                selectedAttributeValue = selectedAttribute.value;
+              }
+
+              return (
+                <button
+                  className={`attribute_option ${attributeType} ${
+                    selectedAttributeName === attributeName &&
+                    selectedAttributeValue === attribute.value
+                      ? "selected"
+                      : ""
+                  }`}
+                  style={{
+                    backgroundColor: `${attribute.value}`,
+                  }}
+                  title={attribute.displayValue}
+                  key={attribute.id}
+                  onClick={() =>
+                    this.updateAttributes(
+                      attributeName,
+                      attribute.displayValue,
+                      attributeType,
+                      attribute.value
+                    )
+                  }
+                ></button>
+              );
+            })}
+          </>
+        )}
+      </div>
+    );
+  }
+
+  renderPriceField() {
+    return (
+      <div className="price_field">
+        <h3 className="title">PRICE:</h3>
+        <h3 className="price">
+          {currencySymbols[this.props.currency] +
+            " " +
+            this.getPriceByCurrency()}
+        </h3>
+      </div>
+    );
+  }
+
+  renderButton() {
+    return (
+      <button
+        className="add_to_cart"
+        disabled={!this.state.product.inStock}
+        onClick={() => this.props.addToCart(this.state.cartItem)}
+      >
+        ADD TO CART
+      </button>
+    );
+  }
+
+  renderDescription() {
+    return (
+      <div className="description_field">
+        {parse(this.state.product.description)}
+      </div>
     );
   }
 }

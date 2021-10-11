@@ -41,45 +41,69 @@ export class CartOverlay extends PureComponent {
         ref={this.cartOverlayRef}
         style={{ maxHeight: "min(80vh, 800px)" }}
       >
-        <div className="header">
-          <h3>My Bag,</h3>
-          <p>{this.props.cartItems.length} Items</p>
-        </div>
-        <div className="cart_items">
-          {this.props.cartItems.map((item) => (
-            <CartOverlayItem key={item.cartItemId} itemId={item.cartItemId} />
-          ))}
-        </div>
-        <div className="footer">
-          <h3>Total</h3>
-          <h3>
-            {this.props.cartItems.length
-              ? currencySymbols[this.props.currency] + this.calculateTotal()
-              : currencySymbols[this.props.currency] + "0"}
-          </h3>
-        </div>
-        <div className="buttons">
-          <Link to="/cart">
-            <button
-              type="button"
-              className="view_bag"
-              onClick={() => this.props.toggleCartOverlay()}
-            >
-              VIEW BAG
-            </button>
-          </Link>
+        {this.renderHeader()}
+        {this.renderCartItems()}
+        {this.renderFooter()}
+        {this.renderButtons()}
+      </div>
+    );
+  }
 
-          <Link to="/cart">
-            <button
-              type="button"
-              className="checkout"
-              onClick={() => this.props.toggleCartOverlay()}
-              disabled={this.props.cartItems.length === 0}
-            >
-              CHECKOUT
-            </button>
-          </Link>
-        </div>
+  renderHeader() {
+    return (
+      <div className="header">
+        <h3>My Bag,</h3>
+        <p>{this.props.cartItems.length} Items</p>
+      </div>
+    );
+  }
+
+  renderCartItems() {
+    return (
+      <div className="cart_items">
+        {this.props.cartItems.map((item) => (
+          <CartOverlayItem key={item.cartItemId} itemId={item.cartItemId} />
+        ))}
+      </div>
+    );
+  }
+
+  renderFooter() {
+    return (
+      <div className="footer">
+        <h3>Total</h3>
+        <h3>
+          {this.props.cartItems.length
+            ? currencySymbols[this.props.currency] + this.calculateTotal()
+            : currencySymbols[this.props.currency] + "0"}
+        </h3>
+      </div>
+    );
+  }
+
+  renderButtons() {
+    return (
+      <div className="buttons">
+        <Link to="/cart">
+          <button
+            type="button"
+            className="view_bag"
+            onClick={() => this.props.toggleCartOverlay()}
+          >
+            VIEW BAG
+          </button>
+        </Link>
+
+        <Link to="/cart">
+          <button
+            type="button"
+            className="checkout"
+            onClick={() => this.props.toggleCartOverlay()}
+            disabled={this.props.cartItems.length === 0}
+          >
+            CHECKOUT
+          </button>
+        </Link>
       </div>
     );
   }

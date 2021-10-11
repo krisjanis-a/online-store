@@ -29,17 +29,27 @@ export class CategoryPage extends PureComponent {
     return (
       <div className="category_page">
         <h1 className="category_title">{this.props.category}</h1>
-        <div className="items">
-          {this.state.productsId.length !== 0 ? (
-            this.state.productsId.map((productId) => {
-              return <Item key={productId} productId={productId} />;
-            })
-          ) : (
-            <h1>No products to display</h1>
-          )}
-        </div>
+        {this.renderProductCards()}
       </div>
     );
+  }
+
+  renderProductCards() {
+    return (
+      <div className="items">
+        {this.state.productsId.length !== 0 ? (
+          this.state.productsId.map((productId) =>
+            this.renderProductCard(productId)
+          )
+        ) : (
+          <h1>No products to display</h1>
+        )}
+      </div>
+    );
+  }
+
+  renderProductCard(productId) {
+    return <Item key={productId} productId={productId} />;
   }
 }
 

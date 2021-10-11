@@ -24,11 +24,11 @@
     }
   }
 
-  .add-to-cart_button_container {
+  .cart_icon_container {
     position: relative;
     width: 100%;
 
-    .button {
+    .icon {
       display: none;
       position: absolute;
       right: 5%;
@@ -54,14 +54,14 @@
 
 .category_page_item:hover {
   box-shadow: 0 0 1rem var(--main-gray);
-  .button {
+  .icon {
     display: flex;
   }
 }
 
 .category_page_item.out-of-stock {
   // box-shadow: none;
-  .button {
+  .icon {
     display: none;
   }
 

@@ -50,84 +50,119 @@ export class Navbar extends PureComponent {
         className="navbar_container"
         style={{ position: "sticky", top: "0", zIndex: "30" }}
       >
-        {this.state.showCartOverlay && (
-          <div
-            className="navbar_overlay_container"
-            style={{ position: "relative" }}
-          >
-            <div className="navbar_overlay"></div>
-          </div>
-        )}
+        {this.renderOverlay()}
+
         <div className="navbar">
-          <ul className="navbar_categories_list">
-            {this.props.categories.categories.map((category) => (
-              <Link to="/" key={category}>
-                <li
-                  className={category === this.props.category ? "active" : ""}
-                  key={category}
-                  onClick={() => this.setNewCategory(category)}
-                >
-                  {category}
-                </li>
-              </Link>
-            ))}
-          </ul>
-          <Link to="/">{parse(returnHome)}</Link>
+          {this.renderCategories()}
+          {this.renderHomeButton()}
 
           <div className="actions">
-            <div className="currency_change">
-              <div
-                className="currency_button"
-                onClick={() => {
-                  this.toggleCurrencySwitcher();
-                  this.setState({ showCartOverlay: false });
-                }}
-              >
-                {/* SYMBOL */}
-                <div className="currency_symbol">
-                  {currencySymbols[this.props.currency]}
-                </div>
-
-                {this.state.showCurrencySwitcher ? (
-                  // ARROW UP
-                  <>{parse(arrowUp)}</>
-                ) : (
-                  // ARROW DOWN
-                  <>{parse(arrowDown)}</>
-                )}
-              </div>
-
-              {this.state.showCurrencySwitcher ? (
-                <div className="currency_switcher_wrapper">
-                  <CurrencySwitcher
-                    toggleCurrencySwitcher={this.toggleCurrencySwitcher}
-                  />
-                </div>
-              ) : null}
-            </div>
-
-            <div className="open_cart">
-              {this.props.cartItems.length !== 0 ? (
-                <div className="item_count">{this.props.cartItems.length}</div>
-              ) : null}
-              <div
-                className="cart_button"
-                onClick={() => {
-                  this.toggleCartOverlay();
-                  this.setState({ showCurrencySwitcher: false });
-                }}
-              >
-                {/* ICON */}
-                {parse(cartIcon)}
-              </div>
-              {this.state.showCartOverlay ? (
-                <div className="cart_overlay_wrapper">
-                  <CartOverlay toggleCartOverlay={this.toggleCartOverlay} />
-                </div>
-              ) : null}
-            </div>
+            {this.renderCurrencyField()}
+            {this.renderCartField()}
           </div>
         </div>
+      </div>
+    );
+  }
+
+  renderOverlay() {
+    return (
+      this.state.showCartOverlay && (
+        <div
+          className="navbar_overlay_container"
+          style={{ position: "relative" }}
+        >
+          <div className="navbar_overlay"></div>
+        </div>
+      )
+    );
+  }
+
+  renderCategories() {
+    return (
+      <ul className="navbar_categories_list">
+        {this.props.categories.categories.map((category) =>
+          this.renderCategory(category)
+        )}
+      </ul>
+    );
+  }
+
+  renderCategory(category) {
+    return (
+      <Link to="/" key={category}>
+        <li
+          className={category === this.props.category ? "active" : ""}
+          key={category}
+          onClick={() => this.setNewCategory(category)}
+        >
+          {category}
+        </li>
+      </Link>
+    );
+  }
+
+  renderHomeButton() {
+    return <Link to="/">{parse(returnHome)}</Link>;
+  }
+
+  renderCurrencyField() {
+    return (
+      <div className="currency_change">
+        {this.renderCurrencyButton()}
+        {this.state.showCurrencySwitcher ? (
+          <div className="currency_switcher_wrapper">
+            <CurrencySwitcher
+              toggleCurrencySwitcher={this.toggleCurrencySwitcher}
+            />
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  renderCurrencyButton() {
+    return (
+      <div
+        className="currency_button"
+        onClick={() => {
+          this.toggleCurrencySwitcher();
+          this.setState({ showCartOverlay: false });
+        }}
+      >
+        <div className="currency_symbol">
+          {currencySymbols[this.props.currency]}
+        </div>
+
+        {this.state.showCurrencySwitcher ? (
+          <>{parse(arrowUp)}</>
+        ) : (
+          <>{parse(arrowDown)}</>
+        )}
+      </div>
+    );
+  }
+
+  renderCartField() {
+    return (
+      <div className="open_cart">
+        {this.props.cartItems.length !== 0 ? (
+          <div className="item_count">{this.props.cartItems.length}</div>
+        ) : null}
+        <div
+          className="cart_button"
+          onClick={() => {
+            this.toggleCartOverlay();
+            this.setState({ showCurrencySwitcher: false });
+          }}
+        >
+          {parse(cartIcon)}
+        </div>
+        {this.state.showCartOverlay ? (
+          <div className="cart_overlay_wrapper">
+            <CartOverlay toggleCartOverlay={this.toggleCartOverlay} />
+          </div>
+        ) : null}
       </div>
     );
   }
