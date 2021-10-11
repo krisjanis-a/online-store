@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import "./CartItem.css";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
+import changeImage from "../../utils/changeImage";
 
 export class CartItem extends PureComponent {
   constructor(props) {
@@ -11,6 +12,8 @@ export class CartItem extends PureComponent {
       item: null,
       imageIndex: 0,
     };
+
+    this.changeImage = changeImage.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +24,9 @@ export class CartItem extends PureComponent {
     });
   }
 
+  //TODO create utils file for this => modify so it can be used everywhere in project
   getPriceByCurrency() {
+    //TODO input should be destructured prices object
     const priceObj = this.state.item.cartItem.prices.filter(
       (price) => price.currency === this.props.currency
     );
@@ -32,131 +37,127 @@ export class CartItem extends PureComponent {
     }
   }
 
-  changeImage(direction) {
-    if (direction === "next") {
-      if (
-        this.state.imageIndex ===
-        this.state.item.cartItem.gallery.length - 1
-      ) {
-        this.setState({
-          imageIndex: 0,
-        });
-      } else {
-        this.setState({
-          imageIndex: this.state.imageIndex + 1,
-        });
-      }
-    }
-    if (direction === "prev") {
-      if (this.state.imageIndex === 0) {
-        this.setState({
-          imageIndex: this.state.item.cartItem.gallery.length - 1,
-        });
-      } else {
-        this.setState({
-          imageIndex: this.state.imageIndex - 1,
-        });
-      }
-    }
-  }
-
   render() {
     return (
       <div className="cart_item">
         {this.state.item !== null ? (
           <>
             <div className="product_info">
-              <h2 className="brand_title">{this.state.item.cartItem.brand}</h2>
-              <h2 className="product_title">{this.state.item.cartItem.name}</h2>
-              <h3 className="price">
-                {currencySymbols[this.props.currency] +
-                  " " +
-                  this.getPriceByCurrency()}
-              </h3>
-              <div className="attribute_choices">
-                {this.state.item.cartItem.selectedAttributes.map(
-                  (attribute) => {
-                    return (
-                      <div key={attribute.name}>
-                        {attribute.type === "text" && (
-                          <div
-                            title={attribute.name}
-                            className={`attribute_choice ${attribute.type}`}
-                            key={attribute.name}
-                          >
-                            {attribute.value}
-                          </div>
-                        )}
-                        {attribute.type === "swatch" && (
-                          <div
-                            title={attribute.displayValue}
-                            className={`attribute_choice ${attribute.type}`}
-                            key={attribute.name}
-                            style={{
-                              backgroundColor: `${attribute.value}`,
-                            }}
-                          ></div>
-                        )}
-                      </div>
-                    );
-                  }
-                )}
-              </div>
+              {this.renderInfoText()}
+              {this.renderAttributes()}
             </div>
             <div className="quantity-image_wrapper">
-              <div className="quantity_field">
-                <button
-                  className="add_item"
-                  onClick={() => {
-                    this.props.addExistingItem(this.state.item.cartItemId);
-                  }}
-                >
-                  +
-                </button>
-                <p className="quantity">
-                  {
-                    this.props.cartItems.filter(
-                      (item) => item.cartItemId === this.state.item.cartItemId
-                    )[0].quantity
-                  }
-                </p>
-                <button
-                  className="remove_item"
-                  onClick={() => {
-                    this.props.removeExistingItem(this.state.item.cartItemId);
-                  }}
-                >
-                  -
-                </button>
-              </div>
-              <div className="image_container">
-                {this.state.item.cartItem.gallery.length > 1 && (
-                  <>
-                    <button
-                      className="prev_image"
-                      onClick={() => this.changeImage("prev")}
-                    >
-                      &lt;
-                    </button>
-                    <button
-                      className="next_image"
-                      onClick={() => this.changeImage("next")}
-                    >
-                      &gt;
-                    </button>
-                  </>
-                )}
-                <img
-                  className="item_image"
-                  src={this.state.item.cartItem.gallery[this.state.imageIndex]}
-                  alt=""
-                />
-              </div>
+              {this.renderQuantity()}
+              {this.renderImage()}
             </div>
           </>
         ) : (
           <h3 style={{ margin: "1rem" }}>Item cannot be displayed</h3>
         )}
+      </div>
+    );
+  }
+
+  renderInfoText() {
+    return (
+      <div className="text">
+        <h2 className="brand_title">{this.state.item.cartItem.brand}</h2>
+        <h2 className="product_title">{this.state.item.cartItem.name}</h2>
+        <h3 className="price">
+          {currencySymbols[this.props.currency] +
+            " " +
+            this.getPriceByCurrency()}
+        </h3>
+      </div>
+    );
+  }
+
+  renderAttributes() {
+    return (
+      <div className="attribute_choices">
+        {this.state.item.cartItem.selectedAttributes.map((attribute) => {
+          return (
+            <div key={attribute.name}>
+              {attribute.type === "text" && (
+                <div
+                  title={attribute.name}
+                  className={`attribute_choice ${attribute.type}`}
+                  key={attribute.name}
+                >
+                  {attribute.value}
+                </div>
+              )}
+              {attribute.type === "swatch" && (
+                <div
+                  title={attribute.displayValue}
+                  className={`attribute_choice ${attribute.type}`}
+                  key={attribute.name}
+                  style={{
+                    backgroundColor: `${attribute.value}`,
+                  }}
+                ></div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  renderQuantity() {
+    return (
+      <div className="quantity_field">
+        <button
+          className="add_item"
+          onClick={() => {
+            this.props.addExistingItem(this.state.item.cartItemId);
+          }}
+        >
+          +
+        </button>
+        <p className="quantity">
+          {
+            this.props.cartItems.filter(
+              (item) => item.cartItemId === this.state.item.cartItemId
+            )[0].quantity
+          }
+        </p>
+        <button
+          className="remove_item"
+          onClick={() => {
+            this.props.removeExistingItem(this.state.item.cartItemId);
+          }}
+        >
+          -
+        </button>
+      </div>
+    );
+  }
+
+  renderImage() {
+    return (
+      <div className="image_container">
+        {this.state.item.cartItem.gallery.length > 1 && (
+          <>
+            <button
+              className="prev_image"
+              onClick={() => this.changeImage("prev")}
+            >
+              &lt;
+            </button>
+            <button
+              className="next_image"
+              onClick={() => this.changeImage("next")}
+            >
+              &gt;
+            </button>
+          </>
+        )}
+        <img
+          className="item_image"
+          src={this.state.item.cartItem.gallery[this.state.imageIndex]}
+          alt=""
+        />
       </div>
     );
   }

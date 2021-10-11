@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import "./CartOverlayItem.css";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
+import changeImage from "../../utils/changeImage";
 
 export class CartOverlayItem extends PureComponent {
   constructor(props) {
@@ -11,6 +12,8 @@ export class CartOverlayItem extends PureComponent {
       item: null,
       imageIndex: 0,
     };
+
+    this.changeImage = changeImage.bind(this);
   }
 
   componentDidMount() {
@@ -29,34 +32,6 @@ export class CartOverlayItem extends PureComponent {
       const amount = priceObj[0].amount;
 
       return amount;
-    }
-  }
-
-  changeImage(direction) {
-    if (direction === "next") {
-      if (
-        this.state.imageIndex ===
-        this.state.item.cartItem.gallery.length - 1
-      ) {
-        this.setState({
-          imageIndex: 0,
-        });
-      } else {
-        this.setState({
-          imageIndex: this.state.imageIndex + 1,
-        });
-      }
-    }
-    if (direction === "prev") {
-      if (this.state.imageIndex === 0) {
-        this.setState({
-          imageIndex: this.state.item.cartItem.gallery.length - 1,
-        });
-      } else {
-        this.setState({
-          imageIndex: this.state.imageIndex - 1,
-        });
-      }
     }
   }
 
