@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import "./CategoryPage.css";
 import Item from "../../components/CategoryPageItem/CategoryPageItem";
 import fetchProductsByCategory from "./fetchProductsByCategory";
-
 export class CategoryPage extends PureComponent {
   constructor(props) {
     super(props);
@@ -59,15 +58,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCategory: (category) => {
-      dispatch({
-        type: "SET_CATEGORY",
-        payload: category,
-      });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryPage);
+export default connect(mapStateToProps)(CategoryPage);

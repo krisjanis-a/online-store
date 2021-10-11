@@ -2,8 +2,13 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import "./ProductPage.css";
 import parse from "html-react-parser";
+
 import currencySymbols from "../../utils/currencySymbols";
 import fetchProductById from "./fetchProductById";
+
+import { addProduct } from "../../store/actions/cartActions";
+import { selectProduct } from "../../store/actions/selectProductActions";
+import { saveProduct } from "../../store/actions/productsActions";
 
 export class ProductPage extends PureComponent {
   constructor(props) {
@@ -327,22 +332,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     selectProduct: (productId) => {
-      dispatch({
-        type: "SELECT_PRODUCT",
-        payload: productId,
-      });
+      dispatch(selectProduct(productId));
     },
     saveProduct: (product) => {
-      dispatch({
-        type: "SAVE_PRODUCT",
-        payload: product,
-      });
+      dispatch(saveProduct(product));
     },
     addToCart: (cartItem) => {
-      dispatch({
-        type: "ADD_PRODUCT",
-        payload: cartItem,
-      });
+      dispatch(addProduct(cartItem));
     },
   };
 };

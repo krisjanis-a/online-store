@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import changeImage from "../../utils/changeImage";
 
+import {
+  addExistingProduct,
+  removeProduct,
+} from "../../store/actions/cartActions";
+
 export class CartItem extends PureComponent {
   constructor(props) {
     super(props);
@@ -173,16 +178,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addExistingItem: (cartItemId) => {
-      dispatch({
-        type: "ADD_EXISTING_PRODUCT",
-        payload: cartItemId,
-      });
+      dispatch(addExistingProduct(cartItemId));
     },
     removeExistingItem: (cartItemId) => {
-      dispatch({
-        type: "REMOVE_PRODUCT",
-        payload: cartItemId,
-      });
+      dispatch(removeProduct(cartItemId));
     },
   };
 };

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import "./CurrencySwitcher.css";
 import currencySymbols from "../../utils/currencySymbols";
 
+import { setCurrency } from "../../store/actions/currencyActions";
+
 export class CurrencySwitcher extends PureComponent {
   constructor(props) {
     super(props);
@@ -82,10 +84,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setCurrency: (currency) => {
-      dispatch({
-        type: "SET_CURRENCY",
-        payload: currency,
-      });
+      dispatch(setCurrency(currency));
     },
   };
 };

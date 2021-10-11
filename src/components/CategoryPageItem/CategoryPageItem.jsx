@@ -8,6 +8,8 @@ import parse from "html-react-parser";
 import { cartIconGreen } from "../../utils/iconSVGs";
 import fetchProductById from "./fetchProductById";
 
+import { selectProduct } from "../../store/actions/selectProductActions";
+
 export class CategoryPageItem extends PureComponent {
   constructor(props) {
     super(props);
@@ -134,10 +136,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     selectProduct: (productId) => {
-      dispatch({
-        type: "SELECT_PRODUCT",
-        payload: productId,
-      });
+      dispatch(selectProduct(productId));
     },
   };
 };

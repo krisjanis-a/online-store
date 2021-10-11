@@ -9,6 +9,11 @@ import { connect } from "react-redux";
 import ScrollToTop from "./ScrollToTop";
 import { getCategories, getCurrencies } from "./initializationQueries";
 
+import { setCategory } from "../store/actions/categoryActions";
+import { setCurrency } from "../store/actions/currencyActions";
+import { saveCategories } from "../store/actions/categoriesActions";
+import { saveCurrencies } from "../store/actions/currenciesActions";
+
 class App extends PureComponent {
   componentDidMount() {
     this.getCategories = getCategories.bind(this);
@@ -74,28 +79,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setCategory: (category) => {
-      dispatch({
-        type: "SET_CATEGORY",
-        payload: category,
-      });
+      dispatch(setCategory(category));
     },
     setCurrency: (currency) => {
-      dispatch({
-        type: "SET_CURRENCY",
-        payload: currency,
-      });
+      dispatch(setCurrency(currency));
     },
     saveCurrencies: (currencies) => {
-      dispatch({
-        type: "SAVE_CURRENCIES",
-        payload: currencies,
-      });
+      dispatch(saveCurrencies(currencies));
     },
     saveCategories: (categories) => {
-      dispatch({
-        type: "SAVE_CATEGORIES",
-        payload: categories,
-      });
+      dispatch(saveCategories(categories));
     },
   };
 };

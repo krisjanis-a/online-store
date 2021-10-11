@@ -8,6 +8,8 @@ import currencySymbols from "../../utils/currencySymbols";
 import parse from "html-react-parser";
 import { arrowUp, arrowDown, returnHome, cartIcon } from "../../utils/iconSVGs";
 
+import { setCategory } from "../../store/actions/categoryActions";
+
 export class Navbar extends PureComponent {
   constructor(props) {
     super(props);
@@ -180,10 +182,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setCategory: (category) => {
-      dispatch({
-        type: "SET_CATEGORY",
-        payload: category,
-      });
+      dispatch(setCategory(category));
     },
   };
 };
