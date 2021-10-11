@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import "./ProductPage.css";
 import parse from "html-react-parser";
 import currencySymbols from "../../utils/currencySymbols";
 import fetchProductById from "./fetchProductById";
 
-export class ProductPage extends Component {
+export class ProductPage extends PureComponent {
   constructor(props) {
     super(props);
 

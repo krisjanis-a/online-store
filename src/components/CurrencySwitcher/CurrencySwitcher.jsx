@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import "./CurrencySwitcher.css";
 import currencySymbols from "../../utils/currencySymbols";
 
-export class CurrencySwitcher extends Component {
+export class CurrencySwitcher extends PureComponent {
   constructor(props) {
     super(props);
     this.currencySwitcherRef = React.createRef();

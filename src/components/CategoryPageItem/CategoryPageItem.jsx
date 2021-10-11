@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "./CategoryPageItem.css";
@@ -8,7 +8,7 @@ import parse from "html-react-parser";
 import { cartIconGreen } from "../../utils/iconSVGs";
 import fetchProductById from "./fetchProductById";
 
-export class CategoryPageItem extends Component {
+export class CategoryPageItem extends PureComponent {
   constructor(props) {
     super(props);
 

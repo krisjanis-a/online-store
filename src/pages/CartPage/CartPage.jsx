@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./CartPage.css";
 import CartItem from "../../components/CartItem/CartItem";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import calculateTotal from "../../utils/calculateTotal";
 
-export class CartPage extends Component {
+export class CartPage extends PureComponent {
   constructor(props) {
     super(props);
     this.calculateTotal = calculateTotal.bind(this);

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import "./CartOverlay.css";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import calculateTotal from "../../utils/calculateTotal";
 
-export class CartOverlay extends Component {
+export class CartOverlay extends PureComponent {
   constructor(props) {
     super(props);
     this.cartOverlayRef = React.createRef();

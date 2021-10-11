@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
 import CartOverlay from "../CartOverlay/CartOverlay";
@@ -8,7 +8,7 @@ import currencySymbols from "../../utils/currencySymbols";
 import parse from "html-react-parser";
 import { arrowUp, arrowDown, returnHome, cartIcon } from "../../utils/iconSVGs";
 
-export class Navbar extends Component {
+export class Navbar extends PureComponent {
   constructor(props) {
     super(props);
 

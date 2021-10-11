@@ -1,5 +1,5 @@
 import "./App.css";
-import { Component } from "react";
+import { PureComponent } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductPage from "../pages/ProductPage/ProductPage";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import ScrollToTop from "./ScrollToTop";
 import { getCategories, getCurrencies } from "./initializationQueries";
 
-class App extends Component {
+class App extends PureComponent {
   componentDidMount() {
     this.getCategories = getCategories.bind(this);
     this.getCategories();

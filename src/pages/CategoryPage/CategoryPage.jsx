@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import "./CategoryPage.css";
 import Item from "../../components/CategoryPageItem/CategoryPageItem";
 import fetchProductsByCategory from "./fetchProductsByCategory";
 
-export class CategoryPage extends Component {
+export class CategoryPage extends PureComponent {
   constructor(props) {
     super(props);
 
