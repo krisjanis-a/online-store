@@ -32,10 +32,6 @@ export class CurrencySwitcher extends PureComponent {
     }
   }
 
-  setNewCurrency(newCurrency) {
-    this.props.setCurrency(newCurrency);
-  }
-
   componentWillUnmount() {
     window.removeEventListener("mousedown", this.clickInsideComponent);
   }
@@ -64,7 +60,7 @@ export class CurrencySwitcher extends PureComponent {
         className="currency_item"
         key={currency}
         onClick={() => {
-          this.setNewCurrency(currency);
+          this.props.setCurrency(currency);
           this.props.toggleCurrencySwitcher();
         }}
       >
