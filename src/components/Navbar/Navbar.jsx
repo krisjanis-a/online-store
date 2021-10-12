@@ -21,13 +21,6 @@ export class Navbar extends PureComponent {
 
     this.toggleCartOverlay = this.toggleCartOverlay.bind(this);
     this.toggleCurrencySwitcher = this.toggleCurrencySwitcher.bind(this);
-    this.setNewCategory = this.setNewCategory.bind(this);
-  }
-
-  // Set new category
-
-  setNewCategory(newCategory) {
-    this.props.setCategory(newCategory);
   }
 
   // Show / Hide Cart Overlay
@@ -96,7 +89,7 @@ export class Navbar extends PureComponent {
         <li
           className={category === this.props.category ? "active" : ""}
           key={category}
-          onClick={() => this.setNewCategory(category)}
+          onClick={() => this.props.setCategory(category)}
         >
           {category}
         </li>
