@@ -80,10 +80,23 @@ export class Navbar extends PureComponent {
   }
 
   renderCategories() {
-    const { categories } = this.props.categories;
+    const {
+      category,
+      setCategory,
+      categories: { categories },
+    } = this.props;
 
     return (
       <ul className="navbar_categories_list">
+        <Link to="/" key={"all"}>
+          <li
+            className={category === "all" ? "active" : ""}
+            key={"all"}
+            onClick={() => setCategory("all")}
+          >
+            all
+          </li>
+        </Link>
         {categories.map((category) => this.renderCategory(category))}
       </ul>
     );

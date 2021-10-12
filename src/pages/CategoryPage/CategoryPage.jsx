@@ -10,10 +10,11 @@ export class CategoryPage extends PureComponent {
     this.state = {
       productsId: [],
     };
+
+    this.fetchProductsByCategory = fetchProductsByCategory.bind(this);
   }
 
   componentDidMount() {
-    this.fetchProductsByCategory = fetchProductsByCategory.bind(this);
     this.fetchProductsByCategory();
   }
 
@@ -21,7 +22,6 @@ export class CategoryPage extends PureComponent {
     const { category } = this.props;
 
     if (category !== prevProps.category) {
-      this.fetchProductsByCategory = fetchProductsByCategory.bind(this);
       this.fetchProductsByCategory();
     }
   }
@@ -59,6 +59,7 @@ export class CategoryPage extends PureComponent {
 const mapStateToProps = (state) => {
   return {
     category: state.category,
+    categories: state.categories,
   };
 };
 

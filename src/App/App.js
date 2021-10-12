@@ -27,21 +27,27 @@ class App extends PureComponent {
   }
 
   initializeProps(prevProps) {
+    const {
+      setCategory,
+      currencies: { currencies },
+      setCurrency,
+    } = this.props;
+
     // Initial category set after mounting component
     if (prevProps.category === null) {
-      if (this.props.categories.categories[0]) {
-        this.props.setCategory(this.props.categories.categories[0]);
-      }
+      setCategory("all");
     }
     // Initial currency set after mounting component
     if (prevProps.currency === null) {
-      if (this.props.currencies.currencies[0]) {
-        this.props.setCurrency(this.props.currencies.currencies[0]);
+      if (currencies[0]) {
+        setCurrency(currencies[0]);
       }
     }
   }
 
   render() {
+    const { selectedProduct } = this.props;
+
     return (
       <div className="App">
         <Router>
@@ -54,7 +60,7 @@ class App extends PureComponent {
             <Route path="/cart">
               <CartPage />
             </Route>
-            <Route path={`/product:${this.props.selectedProduct}`}>
+            <Route path={`/product:${selectedProduct}`}>
               <ProductPage />
             </Route>
           </Switch>

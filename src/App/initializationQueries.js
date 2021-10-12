@@ -2,22 +2,32 @@ import makeQuery from "../utils/apolloClient";
 
 // Fetch categories
 export function getCategories() {
+  const {
+    saveCategories,
+    categories: { categories },
+  } = this.props;
+
   const categoryQuery = "query { categories { name }}";
-  if (this.props.categories.categories.length === 0) {
+  if (categories.length === 0) {
     makeQuery(categoryQuery).then((results) => {
       const newCategories = results.categories.map((category) => category.name);
-      this.props.saveCategories(newCategories);
+      saveCategories(newCategories);
     });
   }
 }
 
 // Fetch currencies
 export function getCurrencies() {
+  const {
+    saveCurrencies,
+    currencies: { currencies },
+  } = this.props;
+
   const currencyQuery = "query { currencies }";
-  if (this.props.currencies.currencies.length === 0) {
+  if (currencies.length === 0) {
     makeQuery(currencyQuery).then((results) => {
       const newCurrencies = results.currencies.map((currency) => currency);
-      this.props.saveCurrencies(newCurrencies);
+      saveCurrencies(newCurrencies);
     });
   }
 }
