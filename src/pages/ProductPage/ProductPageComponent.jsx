@@ -12,9 +12,11 @@ export class ProductPage extends PureComponent {
   }
 
   render() {
+    const { product } = this.props;
+
     return (
       <>
-        {Object.keys(this.props.product).length !== 0 ? (
+        {Object.keys(product).length !== 0 ? (
           <div className="product_page">
             {this.renderImageOptions()}
             {this.renderMainImage()}
@@ -35,15 +37,13 @@ export class ProductPage extends PureComponent {
   }
 
   renderImageOptions() {
+    const { images, setMainImage } = this.props;
+
     return (
       <div className="image_choices">
-        {this.props.images.map((imgURL) => (
+        {images.map((imgURL) => (
           <div className="image_option" key={imgURL}>
-            <img
-              src={imgURL}
-              alt=""
-              onClick={() => this.props.setMainImage(imgURL)}
-            />
+            <img src={imgURL} alt="" onClick={() => setMainImage(imgURL)} />
           </div>
         ))}
       </div>
@@ -51,24 +51,30 @@ export class ProductPage extends PureComponent {
   }
 
   renderMainImage() {
+    const { mainImage } = this.props;
+
     return (
       <div className="main_image">
-        <img src={this.props.mainImage} alt="" />
+        <img src={mainImage} alt="" />
       </div>
     );
   }
 
   renderText() {
+    const { brand, name } = this.props.product;
+
     return (
       <div className="text">
-        <h2 className="brand_title">{this.props.product.brand}</h2>
-        <h2 className="product_title">{this.props.product.name}</h2>
+        <h2 className="brand_title">{brand}</h2>
+        <h2 className="product_title">{name}</h2>
       </div>
     );
   }
 
   renderAttributesField() {
-    return this.props.attributes.map((attributeSet) => {
+    const { attributes } = this.props;
+
+    return attributes.map((attributeSet) => {
       const attributeName = attributeSet.name;
       const attributeType = attributeSet.type;
       const attributes = attributeSet.items;
@@ -86,6 +92,11 @@ export class ProductPage extends PureComponent {
   }
 
   renderAttributes(attributeName, attributeType, attributes) {
+    const {
+      cartItem: { selectedAttributes },
+      updateAttributes,
+    } = this.props;
+
     return (
       <div className="attribute_choices">
         {attributes.map((attribute) => {
@@ -94,8 +105,8 @@ export class ProductPage extends PureComponent {
           let selectedAttributeName;
           let selectedAttributeValue;
 
-          if (this.props.cartItem.selectedAttributes.length !== 0) {
-            selectedAttribute = this.props.cartItem.selectedAttributes.filter(
+          if (selectedAttributes.length !== 0) {
+            selectedAttribute = selectedAttributes.filter(
               (attribute) => attribute.name === attributeName
             )[0];
 
@@ -123,7 +134,7 @@ export class ProductPage extends PureComponent {
               title={attribute.displayValue}
               key={attribute.id}
               onClick={() =>
-                this.props.updateAttributes(
+                updateAttributes(
                   attributeName,
                   attribute.displayValue,
                   attributeType,
@@ -140,24 +151,26 @@ export class ProductPage extends PureComponent {
   }
 
   renderPriceField() {
+    const { currency, prices } = this.props;
+
     return (
       <div className="price_field">
         <h3 className="title">PRICE:</h3>
         <h3 className="price">
-          {currencySymbols[this.props.currency] +
-            " " +
-            this.getPriceByCurrency(this.props.prices)}
+          {currencySymbols[currency] + " " + this.getPriceByCurrency(prices)}
         </h3>
       </div>
     );
   }
 
   renderButton() {
+    const { addToCart, cartItem, product } = this.props;
+
     return (
       <button
         className="add_to_cart"
-        disabled={!this.props.product.inStock}
-        onClick={() => this.props.addToCart(this.props.cartItem)}
+        disabled={!product.inStock}
+        onClick={() => addToCart(cartItem)}
       >
         ADD TO CART
       </button>
@@ -165,11 +178,9 @@ export class ProductPage extends PureComponent {
   }
 
   renderDescription() {
-    return (
-      <div className="description_field">
-        {parse(this.props.product.description)}
-      </div>
-    );
+    const { description } = this.props.product;
+
+    return <div className="description_field">{parse(description)}</div>;
   }
 }
 

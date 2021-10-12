@@ -24,17 +24,19 @@ export class CartOverlayItem extends PureComponent {
   }
 
   componentDidMount() {
+    const { cartItems, itemId } = this.props;
+
     this.setState({
-      item: this.props.cartItems.filter(
-        (item) => item.cartItemId === this.props.itemId
-      )[0],
+      item: cartItems.filter((item) => item.cartItemId === itemId)[0],
     });
   }
 
   render() {
+    const { item } = this.state;
+
     return (
       <div className="cart_overlay_item">
-        {this.state.item !== null ? (
+        {item !== null ? (
           <>
             <div className="info">
               {this.renderInfoText()}
@@ -53,26 +55,29 @@ export class CartOverlayItem extends PureComponent {
   }
 
   renderInfoText() {
+    const { brand, name, prices } = this.state.item.cartItem;
+    const { currency } = this.props;
+
     return (
       <div className="text">
         <div className="brand_and_name">
-          <h3 className="item_brand">{this.state.item.cartItem.brand}</h3>
-          <p className="item_name">{this.state.item.cartItem.name}</p>
+          <h3 className="item_brand">{brand}</h3>
+          <p className="item_name">{name}</p>
         </div>
         <p className="item_price">
           {" "}
-          {currencySymbols[this.props.currency] +
-            " " +
-            this.getPriceByCurrency(this.state.item.cartItem.prices)}
+          {currencySymbols[currency] + " " + this.getPriceByCurrency(prices)}
         </p>
       </div>
     );
   }
 
   renderAttributes() {
+    const { selectedAttributes } = this.state.item.cartItem;
+
     return (
       <div className="attribute_choices">
-        {this.state.item.cartItem.selectedAttributes.map((attribute) => {
+        {selectedAttributes.map((attribute) => {
           return (
             <div key={attribute.name}>
               {attribute.type === "text" && (
@@ -102,27 +107,29 @@ export class CartOverlayItem extends PureComponent {
   }
 
   renderQuantity() {
+    const { cartItemId } = this.state.item;
+    const { addExistingItem, removeExistingItem, cartItems } = this.props;
+
     return (
       <div className="quantity_field">
         <button
           className="add_item"
           onClick={() => {
-            this.props.addExistingItem(this.state.item.cartItemId);
+            addExistingItem(cartItemId);
           }}
         >
           +
         </button>
         <p className="quantity">
           {
-            this.props.cartItems.filter(
-              (item) => item.cartItemId === this.state.item.cartItemId
-            )[0].quantity
+            cartItems.filter((item) => item.cartItemId === cartItemId)[0]
+              .quantity
           }
         </p>
         <button
           className="remove_item"
           onClick={() => {
-            this.props.removeExistingItem(this.state.item.cartItemId);
+            removeExistingItem(cartItemId);
           }}
         >
           -
@@ -132,9 +139,16 @@ export class CartOverlayItem extends PureComponent {
   }
 
   renderImage() {
+    const {
+      imageIndex,
+      item: {
+        cartItem: { gallery },
+      },
+    } = this.state;
+
     return (
       <div className="image_container">
-        {this.state.item.cartItem.gallery.length > 1 && (
+        {gallery.length > 1 && (
           <>
             <button
               className="prev_image"
@@ -150,11 +164,7 @@ export class CartOverlayItem extends PureComponent {
             </button>
           </>
         )}
-        <img
-          className="item_image"
-          src={this.state.item.cartItem.gallery[this.state.imageIndex]}
-          alt=""
-        />
+        <img className="item_image" src={gallery[imageIndex]} alt="" />
       </div>
     );
   }

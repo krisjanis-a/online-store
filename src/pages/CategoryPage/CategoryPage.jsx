@@ -17,29 +17,33 @@ export class CategoryPage extends PureComponent {
     this.fetchProductsByCategory();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.category !== prevProps.category) {
+  componentDidUpdate(prevProps) {
+    const { category } = this.props;
+
+    if (category !== prevProps.category) {
       this.fetchProductsByCategory = fetchProductsByCategory.bind(this);
       this.fetchProductsByCategory();
     }
   }
 
   render() {
+    const { category } = this.props;
+
     return (
       <div className="category_page">
-        <h1 className="category_title">{this.props.category}</h1>
+        <h1 className="category_title">{category}</h1>
         {this.renderProductCards()}
       </div>
     );
   }
 
   renderProductCards() {
+    const { productsId } = this.state;
+
     return (
       <div className="items">
-        {this.state.productsId.length !== 0 ? (
-          this.state.productsId.map((productId) =>
-            this.renderProductCard(productId)
-          )
+        {productsId.length !== 0 ? (
+          productsId.map((productId) => this.renderProductCard(productId))
         ) : (
           <h1>No products to display</h1>
         )}

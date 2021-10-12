@@ -24,45 +24,52 @@ export class CategoryPageItem extends PureComponent {
   }
 
   componentDidMount() {
-    if (Object.keys(this.state.product).length === 0) {
+    const { product } = this.state;
+
+    if (Object.keys(product).length === 0) {
       this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
     }
   }
 
   componentDidUpdate() {
-    if (Object.keys(this.state.product).length === 0) {
+    const { product } = this.state;
+
+    if (Object.keys(product).length === 0) {
       this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
     }
   }
 
   render() {
+    const { product } = this.state;
+    const { selectProduct } = this.props;
+
     return (
       <>
-        {Object.keys(this.state.product).length !== 0 ? (
+        {Object.keys(product).length !== 0 ? (
           <Link
-            to={`/product:${this.state.product.id}`}
+            to={`/product:${product.id}`}
             onClick={() => {
-              this.props.selectProduct(this.state.product.id);
+              selectProduct(product.id);
             }}
 
             /* 
               ? If needed to disallow access to product page of out-of-stock product => should change cursor in scss file too then
               to={
-                this.state.product.inStock
-                  ? `/product:${this.state.product.id}`
+                product.inStock
+                  ? `/product:${product.id}`
                   : "/"
               }
               onClick={() => {
-                this.state.product.inStock &&
-                  this.props.selectProduct(this.state.product.id);
+                product.inStock &&
+                  selectProduct(product.id);
               }} 
             */
           >
             <div
               className={`category_page_item ${
-                !this.state.product.inStock ? "out-of-stock" : ""
+                !product.inStock ? "out-of-stock" : ""
               }`}
             >
               {this.renderImage()}
@@ -78,16 +85,14 @@ export class CategoryPageItem extends PureComponent {
   }
 
   renderImage() {
+    const { gallery } = this.state.product;
+
     return (
       <div className="image_field">
         <span>OUT OF STOCK</span>
         <img
           className="item_image"
-          src={
-            this.state.product.gallery
-              ? this.state.product.gallery[0]
-              : { noImage }
-          }
+          src={gallery ? gallery[0] : { noImage }}
           alt=""
         />
       </div>
@@ -103,15 +108,17 @@ export class CategoryPageItem extends PureComponent {
   }
 
   renderText() {
+    const {
+      prices,
+      product: { brand, name },
+    } = this.state;
+    const { currency } = this.props;
+
     return (
       <div className="text">
-        <p className="item_name">
-          {this.state.product.brand + " " + this.state.product.name}
-        </p>
+        <p className="item_name">{brand + " " + name}</p>
         <p className="item_price">
-          {currencySymbols[this.props.currency] +
-            " " +
-            this.getPriceByCurrency(this.state.prices)}
+          {currencySymbols[currency] + " " + this.getPriceByCurrency(prices)}
         </p>
       </div>
     );

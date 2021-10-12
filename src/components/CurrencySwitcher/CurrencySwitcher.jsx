@@ -17,18 +17,16 @@ export class CurrencySwitcher extends PureComponent {
     window.addEventListener("mousedown", this.clickInsideComponent);
   }
 
-  componentDidUpdate() {
-    console.log(this.props.currency);
-  }
-
   clickInsideComponent(e) {
+    const { toggleCurrencySwitcher } = this.props;
+
     e.stopPropagation();
     const switcherButton = document.querySelector(".currency_button");
     if (
       !this.currencySwitcherRef.current.contains(e.target) &&
       !switcherButton.contains(e.target)
     ) {
-      this.props.toggleCurrencySwitcher();
+      toggleCurrencySwitcher();
     }
   }
 
@@ -45,23 +43,25 @@ export class CurrencySwitcher extends PureComponent {
   }
 
   renderCurrencyList() {
+    const { currencies } = this.props.currencies;
+
     return (
       <ul className="currency_list">
-        {this.props.currencies.currencies.map((currency) =>
-          this.renderCurrency(currency)
-        )}
+        {currencies.map((currency) => this.renderCurrency(currency))}
       </ul>
     );
   }
 
   renderCurrency(currency) {
+    const { setCurrency, toggleCurrencySwitcher } = this.props;
+
     return (
       <li
         className="currency_item"
         key={currency}
         onClick={() => {
-          this.props.setCurrency(currency);
-          this.props.toggleCurrencySwitcher();
+          setCurrency(currency);
+          toggleCurrencySwitcher();
         }}
       >
         {`${currencySymbols[currency]} ${currency}`}

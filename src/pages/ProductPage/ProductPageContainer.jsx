@@ -36,16 +36,16 @@ export class ProductPageContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { product } = this.state;
+    const { productId } = prevState.cartItem;
+
     // If no selected product present in props (redux store) on component mounting - case where product is accessed from URL
-    if (Object.keys(this.state.product).length === 0) {
+    if (Object.keys(product).length === 0) {
       this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
     }
 
-    if (
-      Object.keys(this.state.product).length !== 0 &&
-      prevState.cartItem.productId === null
-    ) {
+    if (Object.keys(product).length !== 0 && productId === null) {
       // Add default values of selected product to cartItem when product page loaded
       this.addDefaultValuesToCartItem();
     }
@@ -58,15 +58,15 @@ export class ProductPageContainer extends PureComponent {
   }
 
   addDefaultValuesToCartItem() {
+    const { attributes, name, id, brand, gallery, prices } = this.state.product;
+
     // Create attribute section string for cartItemId
-    const attributesString = this.state.product.attributes.map(
-      (attributeSet) => {
-        return `${attributeSet.id}-${attributeSet.items[0].displayValue}`;
-      }
-    );
+    const attributesString = attributes.map((attributeSet) => {
+      return `${attributeSet.id}-${attributeSet.items[0].displayValue}`;
+    });
 
     // Create selected attributes array
-    const attributes = this.state.product.attributes.map((attributeSet) => {
+    const newAttributes = attributes.map((attributeSet) => {
       const attributeSetId = attributeSet.id;
       const attributeDisplayValue = attributeSet.items[0].displayValue;
       const attributeType = attributeSet.type;
@@ -81,13 +81,13 @@ export class ProductPageContainer extends PureComponent {
 
     // Create default cart item
     const defaultCartItem = {
-      cartItemId: `${this.state.product.brand} ${this.state.product.name} ${attributesString}`,
-      productId: this.state.product.id,
-      brand: this.state.product.brand,
-      name: this.state.product.name,
-      selectedAttributes: attributes,
-      gallery: this.state.product.gallery,
-      prices: this.state.product.prices,
+      cartItemId: `${brand} ${name} ${attributesString}`,
+      productId: id,
+      brand: brand,
+      name: name,
+      selectedAttributes: newAttributes,
+      gallery: gallery,
+      prices: prices,
     };
 
     this.setState({
@@ -97,11 +97,13 @@ export class ProductPageContainer extends PureComponent {
 
   //? This is for development, but maybe can leave for "production" if user wants to navigate to specific product through URL (though it's outside of intended app flow)
   getSelectedProductFromURL() {
-    if (this.props.selectedProduct === null) {
+    const { selectedProduct, selectProduct } = this.props;
+
+    if (selectedProduct === null) {
       const currentURL = window.location.href;
       const phrase = /\/product:(.+)/;
       const match = phrase.exec(currentURL)[1];
-      this.props.selectProduct(match);
+      selectProduct(match);
     }
   }
 
@@ -117,21 +119,21 @@ export class ProductPageContainer extends PureComponent {
     attributeType,
     attributeValue
   ) {
+    const { selectedAttributes, brand, name } = this.state.cartItem;
+
     // Add new attribute to existing ones
-    const newAttributes = this.state.cartItem.selectedAttributes.map(
-      (attribute) => {
-        if (attribute.name === attributeId) {
-          return {
-            name: attributeId,
-            displayValue: attributeDisplayValue,
-            type: attributeType,
-            value: attributeValue,
-          };
-        } else {
-          return attribute;
-        }
+    const newAttributes = selectedAttributes.map((attribute) => {
+      if (attribute.name === attributeId) {
+        return {
+          name: attributeId,
+          displayValue: attributeDisplayValue,
+          type: attributeType,
+          value: attributeValue,
+        };
+      } else {
+        return attribute;
       }
-    );
+    });
 
     // Create new attribute string section for cartItemId
     const newCartItemIdAttributes = newAttributes.map((attribute) => {
@@ -141,7 +143,7 @@ export class ProductPageContainer extends PureComponent {
     this.setState((prevState) => ({
       cartItem: {
         ...prevState.cartItem,
-        cartItemId: `${this.state.cartItem.brand} ${this.state.cartItem.name} ${newCartItemIdAttributes}`,
+        cartItemId: `${brand} ${name} ${newCartItemIdAttributes}`,
         selectedAttributes: newAttributes,
       },
     }));

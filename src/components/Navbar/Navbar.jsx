@@ -26,16 +26,20 @@ export class Navbar extends PureComponent {
   // Show / Hide Cart Overlay
 
   toggleCartOverlay() {
+    const { showCartOverlay } = this.state;
+
     this.setState({
-      showCartOverlay: !this.state.showCartOverlay,
+      showCartOverlay: !showCartOverlay,
     });
   }
 
   // Show / Hide Currency Switcher
 
   toggleCurrencySwitcher() {
+    const { showCurrencySwitcher } = this.state;
+
     this.setState({
-      showCurrencySwitcher: !this.state.showCurrencySwitcher,
+      showCurrencySwitcher: !showCurrencySwitcher,
     });
   }
 
@@ -61,8 +65,10 @@ export class Navbar extends PureComponent {
   }
 
   renderOverlay() {
+    const { showCartOverlay } = this.state;
+
     return (
-      this.state.showCartOverlay && (
+      showCartOverlay && (
         <div
           className="navbar_overlay_container"
           style={{ position: "relative" }}
@@ -74,24 +80,26 @@ export class Navbar extends PureComponent {
   }
 
   renderCategories() {
+    const { categories } = this.props.categories;
+
     return (
       <ul className="navbar_categories_list">
-        {this.props.categories.categories.map((category) =>
-          this.renderCategory(category)
-        )}
+        {categories.map((category) => this.renderCategory(category))}
       </ul>
     );
   }
 
-  renderCategory(category) {
+  renderCategory(categoryName) {
+    const { category, setCategory } = this.props;
+
     return (
-      <Link to="/" key={category}>
+      <Link to="/" key={categoryName}>
         <li
-          className={category === this.props.category ? "active" : ""}
-          key={category}
-          onClick={() => this.props.setCategory(category)}
+          className={categoryName === category ? "active" : ""}
+          key={categoryName}
+          onClick={() => setCategory(categoryName)}
         >
-          {category}
+          {categoryName}
         </li>
       </Link>
     );
@@ -102,10 +110,12 @@ export class Navbar extends PureComponent {
   }
 
   renderCurrencyField() {
+    const { showCurrencySwitcher } = this.state;
+
     return (
       <div className="currency_change">
         {this.renderCurrencyButton()}
-        {this.state.showCurrencySwitcher ? (
+        {showCurrencySwitcher ? (
           <div className="currency_switcher_wrapper">
             <CurrencySwitcher
               toggleCurrencySwitcher={this.toggleCurrencySwitcher}
@@ -117,6 +127,9 @@ export class Navbar extends PureComponent {
   }
 
   renderCurrencyButton() {
+    const { currency } = this.props;
+    const { showCurrencySwitcher } = this.state;
+
     return (
       <div
         className="currency_button"
@@ -125,24 +138,21 @@ export class Navbar extends PureComponent {
           this.setState({ showCartOverlay: false });
         }}
       >
-        <div className="currency_symbol">
-          {currencySymbols[this.props.currency]}
-        </div>
+        <div className="currency_symbol">{currencySymbols[currency]}</div>
 
-        {this.state.showCurrencySwitcher ? (
-          <>{parse(arrowUp)}</>
-        ) : (
-          <>{parse(arrowDown)}</>
-        )}
+        {showCurrencySwitcher ? <>{parse(arrowUp)}</> : <>{parse(arrowDown)}</>}
       </div>
     );
   }
 
   renderCartField() {
+    const { cartItems } = this.props;
+    const { showCartOverlay } = this.state;
+
     return (
       <div className="open_cart">
-        {this.props.cartItems.length !== 0 ? (
-          <div className="item_count">{this.props.cartItems.length}</div>
+        {cartItems.length !== 0 ? (
+          <div className="item_count">{cartItems.length}</div>
         ) : null}
         <div
           className="cart_button"
@@ -153,7 +163,7 @@ export class Navbar extends PureComponent {
         >
           {parse(cartIcon)}
         </div>
-        {this.state.showCartOverlay ? (
+        {showCartOverlay ? (
           <div className="cart_overlay_wrapper">
             <CartOverlay toggleCartOverlay={this.toggleCartOverlay} />
           </div>

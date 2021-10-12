@@ -20,13 +20,15 @@ export class CartOverlay extends PureComponent {
   }
 
   clickInsideComponent(e) {
+    const { toggleCartOverlay } = this.props;
+
     e.stopPropagation();
     const cartButton = document.querySelector(".cart_button");
     if (
       !this.cartOverlayRef.current.contains(e.target) &&
       !cartButton.contains(e.target)
     ) {
-      this.props.toggleCartOverlay();
+      toggleCartOverlay();
     }
   }
 
@@ -50,18 +52,22 @@ export class CartOverlay extends PureComponent {
   }
 
   renderHeader() {
+    const { cartItems } = this.props;
+
     return (
       <div className="header">
         <h3>My Bag,</h3>
-        <p>{this.props.cartItems.length} Items</p>
+        <p>{cartItems.length} Items</p>
       </div>
     );
   }
 
   renderCartItems() {
+    const { cartItems } = this.props;
+
     return (
       <div className="cart_items">
-        {this.props.cartItems.map((item) => (
+        {cartItems.map((item) => (
           <CartOverlayItem key={item.cartItemId} itemId={item.cartItemId} />
         ))}
       </div>
@@ -69,26 +75,30 @@ export class CartOverlay extends PureComponent {
   }
 
   renderFooter() {
+    const { cartItems, currency } = this.props;
+
     return (
       <div className="footer">
         <h3>Total</h3>
         <h3>
-          {this.props.cartItems.length
-            ? currencySymbols[this.props.currency] + this.calculateTotal()
-            : currencySymbols[this.props.currency] + "0"}
+          {cartItems.length
+            ? currencySymbols[currency] + this.calculateTotal()
+            : currencySymbols[currency] + "0"}
         </h3>
       </div>
     );
   }
 
   renderButtons() {
+    const { cartItems, toggleCartOverlay } = this.props;
+
     return (
       <div className="buttons">
         <Link to="/cart">
           <button
             type="button"
             className="view_bag"
-            onClick={() => this.props.toggleCartOverlay()}
+            onClick={() => toggleCartOverlay()}
           >
             VIEW BAG
           </button>
@@ -98,8 +108,8 @@ export class CartOverlay extends PureComponent {
           <button
             type="button"
             className="checkout"
-            onClick={() => this.props.toggleCartOverlay()}
-            disabled={this.props.cartItems.length === 0}
+            onClick={() => toggleCartOverlay()}
+            disabled={cartItems.length === 0}
           >
             CHECKOUT
           </button>
