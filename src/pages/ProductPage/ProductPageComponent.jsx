@@ -2,8 +2,15 @@ import React, { PureComponent } from "react";
 import parse from "html-react-parser";
 import currencySymbols from "../../utils/currencySymbols";
 import "./ProductPage.css";
+import getPriceByCurrency from "../../utils/getPriceByCurrency";
 
 export class ProductPage extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.getPriceByCurrency = getPriceByCurrency.bind(this);
+  }
+
   render() {
     return (
       <>
@@ -139,7 +146,7 @@ export class ProductPage extends PureComponent {
         <h3 className="price">
           {currencySymbols[this.props.currency] +
             " " +
-            this.props.getPriceByCurrency()}
+            this.getPriceByCurrency(this.props.prices)}
         </h3>
       </div>
     );

@@ -3,6 +3,7 @@ import "./CartOverlayItem.css";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import changeImage from "../../utils/changeImage";
+import getPriceByCurrency from "../../utils/getPriceByCurrency";
 
 import {
   addExistingProduct,
@@ -19,6 +20,7 @@ export class CartOverlayItem extends PureComponent {
     };
 
     this.changeImage = changeImage.bind(this);
+    this.getPriceByCurrency = getPriceByCurrency.bind(this);
   }
 
   componentDidMount() {
@@ -27,17 +29,6 @@ export class CartOverlayItem extends PureComponent {
         (item) => item.cartItemId === this.props.itemId
       )[0],
     });
-  }
-
-  getPriceByCurrency() {
-    const priceObj = this.state.item.cartItem.prices.filter(
-      (price) => price.currency === this.props.currency
-    );
-    if (priceObj[0]) {
-      const amount = priceObj[0].amount;
-
-      return amount;
-    }
   }
 
   render() {
@@ -72,7 +63,7 @@ export class CartOverlayItem extends PureComponent {
           {" "}
           {currencySymbols[this.props.currency] +
             " " +
-            this.getPriceByCurrency()}
+            this.getPriceByCurrency(this.state.item.cartItem.prices)}
         </p>
       </div>
     );

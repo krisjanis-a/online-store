@@ -3,6 +3,7 @@ import "./CartItem.css";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import changeImage from "../../utils/changeImage";
+import getPriceByCurrency from "../../utils/getPriceByCurrency";
 
 import {
   addExistingProduct,
@@ -19,6 +20,7 @@ export class CartItem extends PureComponent {
     };
 
     this.changeImage = changeImage.bind(this);
+    this.getPriceByCurrency = getPriceByCurrency.bind(this);
   }
 
   componentDidMount() {
@@ -27,19 +29,6 @@ export class CartItem extends PureComponent {
         (item) => item.cartItemId === this.props.itemId
       )[0],
     });
-  }
-
-  //TODO create utils file for this => modify so it can be used everywhere in project
-  getPriceByCurrency() {
-    //TODO input should be destructured prices object
-    const priceObj = this.state.item.cartItem.prices.filter(
-      (price) => price.currency === this.props.currency
-    );
-    if (priceObj[0]) {
-      const amount = priceObj[0].amount;
-
-      return amount;
-    }
   }
 
   render() {
@@ -71,7 +60,7 @@ export class CartItem extends PureComponent {
         <h3 className="price">
           {currencySymbols[this.props.currency] +
             " " +
-            this.getPriceByCurrency()}
+            this.getPriceByCurrency(this.state.item.cartItem.prices)}
         </h3>
       </div>
     );

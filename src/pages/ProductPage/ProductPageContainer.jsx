@@ -105,16 +105,6 @@ export class ProductPageContainer extends PureComponent {
     }
   }
 
-  _getPriceByCurrency() {
-    const priceObj = this.state.prices.filter(
-      (price) => price.currency === this.props.currency
-    );
-    if (priceObj[0]) {
-      const amount = priceObj[0].amount;
-      return amount;
-    }
-  }
-
   _setMainImage(newImageURL) {
     this.setState({
       mainImage: newImageURL,
@@ -158,7 +148,6 @@ export class ProductPageContainer extends PureComponent {
   }
 
   functionsForComponent = {
-    getPriceByCurrency: this._getPriceByCurrency.bind(this),
     setMainImage: this._setMainImage.bind(this),
     updateAttributes: this._updateAttributes.bind(this),
   };

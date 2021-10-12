@@ -5,8 +5,9 @@ import "./CategoryPageItem.css";
 import noImage from "../../assets/no_image_placeholder.jpg";
 import currencySymbols from "../../utils/currencySymbols";
 import parse from "html-react-parser";
-import { cartIconGreen } from "../../utils/iconSVGs";
 import fetchProductById from "./fetchProductById";
+import { cartIconGreen } from "../../utils/iconSVGs";
+import getPriceByCurrency from "../../utils/getPriceByCurrency";
 
 import { selectProduct } from "../../store/actions/selectProductActions";
 
@@ -19,7 +20,7 @@ export class CategoryPageItem extends PureComponent {
       prices: [],
     };
 
-    this.getPriceByCurrency = this.getPriceByCurrency.bind(this);
+    this.getPriceByCurrency = getPriceByCurrency.bind(this);
   }
 
   componentDidMount() {
@@ -33,16 +34,6 @@ export class CategoryPageItem extends PureComponent {
     if (Object.keys(this.state.product).length === 0) {
       this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
-    }
-  }
-
-  getPriceByCurrency() {
-    const priceObj = this.state.prices.filter(
-      (price) => price.currency === this.props.currency
-    );
-    if (priceObj[0]) {
-      const amount = priceObj[0].amount;
-      return amount;
     }
   }
 
@@ -120,7 +111,7 @@ export class CategoryPageItem extends PureComponent {
         <p className="item_price">
           {currencySymbols[this.props.currency] +
             " " +
-            this.getPriceByCurrency()}
+            this.getPriceByCurrency(this.state.prices)}
         </p>
       </div>
     );
