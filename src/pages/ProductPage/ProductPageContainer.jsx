@@ -1,16 +1,14 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import "./ProductPage.css";
-import parse from "html-react-parser";
+import ProductPage from "./ProductPageComponent";
 
-import currencySymbols from "../../utils/currencySymbols";
 import fetchProductById from "./fetchProductById";
 
 import { addProduct } from "../../store/actions/cartActions";
 import { selectProduct } from "../../store/actions/selectProductActions";
 import { saveProduct } from "../../store/actions/productsActions";
 
-export class ProductPage extends PureComponent {
+export class ProductPageContainer extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -27,7 +25,7 @@ export class ProductPage extends PureComponent {
         name: null,
         selectedAttributes: [],
         gallery: [],
-        prices: [],
+        pricesItem: [],
       },
     };
   }
@@ -107,7 +105,7 @@ export class ProductPage extends PureComponent {
     }
   }
 
-  getPriceByCurrency() {
+  _getPriceByCurrency() {
     const priceObj = this.state.prices.filter(
       (price) => price.currency === this.props.currency
     );
@@ -117,13 +115,13 @@ export class ProductPage extends PureComponent {
     }
   }
 
-  setMainImage(newImageURL) {
+  _setMainImage(newImageURL) {
     this.setState({
       mainImage: newImageURL,
     });
   }
 
-  updateAttributes(
+  _updateAttributes(
     attributeId,
     attributeDisplayValue,
     attributeType,
@@ -159,164 +157,27 @@ export class ProductPage extends PureComponent {
     }));
   }
 
+  functionsForComponent = {
+    getPriceByCurrency: this._getPriceByCurrency.bind(this),
+    setMainImage: this._setMainImage.bind(this),
+    updateAttributes: this._updateAttributes.bind(this),
+  };
+
+  propsForComponent() {
+    const { addToCart, currency } = this.props;
+
+    return { addToCart, currency };
+  }
+
   render() {
     return (
       <>
-        {Object.keys(this.state.product).length !== 0 ? (
-          <div className="product_page">
-            {this.renderImageOptions()}
-            {this.renderMainImage()}
-
-            <div className="product_info">
-              {this.renderText()}
-              {this.renderAttributesField()}
-              {this.renderPriceField()}
-              {this.renderButton()}
-              {this.renderDescription()}
-            </div>
-          </div>
-        ) : (
-          <h3 style={{ margin: "2rem" }}>Product cannot be displayed</h3>
-        )}
+        <ProductPage
+          {...this.state}
+          {...this.functionsForComponent}
+          {...this.propsForComponent()}
+        />
       </>
-    );
-  }
-
-  renderImageOptions() {
-    return (
-      <div className="image_choices">
-        {this.state.images.map((imgURL) => (
-          <div className="image_option" key={imgURL}>
-            <img
-              src={imgURL}
-              alt=""
-              onClick={() => this.setMainImage(imgURL)}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  renderMainImage() {
-    return (
-      <div className="main_image">
-        <img src={this.state.mainImage} alt="" />
-      </div>
-    );
-  }
-
-  renderText() {
-    return (
-      <div className="text">
-        <h2 className="brand_title">{this.state.product.brand}</h2>
-        <h2 className="product_title">{this.state.product.name}</h2>
-      </div>
-    );
-  }
-
-  renderAttributesField() {
-    return this.state.attributes.map((attributeSet) => {
-      const attributeName = attributeSet.name;
-      const attributeType = attributeSet.type;
-      const attributes = attributeSet.items;
-
-      return (
-        <div
-          className="attribute_field"
-          key={attributeName + attributes[0].value}
-        >
-          <h3 className="attribute_name">{attributeName}:</h3>
-          {this.renderAttributes(attributeName, attributeType, attributes)}
-        </div>
-      );
-    });
-  }
-
-  renderAttributes(attributeName, attributeType, attributes) {
-    return (
-      <div className="attribute_choices">
-        {attributes.map((attribute) => {
-          // Setup for attribute comparison
-          let selectedAttribute;
-          let selectedAttributeName;
-          let selectedAttributeValue;
-
-          if (this.state.cartItem.selectedAttributes.length !== 0) {
-            selectedAttribute = this.state.cartItem.selectedAttributes.filter(
-              (attribute) => attribute.name === attributeName
-            )[0];
-
-            selectedAttributeName = selectedAttribute.name;
-            selectedAttributeValue = selectedAttribute.value;
-          }
-
-          return (
-            // Add selected / unavailable to className to add styling
-            <button
-              className={`attribute_option 
-                    ${attributeType === "swatch" ? "swatch" : ""}
-                    ${
-                      selectedAttributeName === attributeName &&
-                      selectedAttributeValue === attribute.value
-                        ? "selected"
-                        : ""
-                    }
-                  `}
-              style={{
-                backgroundColor: `${
-                  attributeType === "swatch" && attribute.value
-                }`,
-              }}
-              title={attribute.displayValue}
-              key={attribute.id}
-              onClick={() =>
-                this.updateAttributes(
-                  attributeName,
-                  attribute.displayValue,
-                  attributeType,
-                  attribute.value
-                )
-              }
-            >
-              {attributeType === "text" && attribute.value}
-            </button>
-          );
-        })}
-      </div>
-    );
-  }
-
-  renderPriceField() {
-    return (
-      <div className="price_field">
-        <h3 className="title">PRICE:</h3>
-        <h3 className="price">
-          {currencySymbols[this.props.currency] +
-            " " +
-            this.getPriceByCurrency()}
-        </h3>
-      </div>
-    );
-  }
-
-  renderButton() {
-    return (
-      <button
-        className="add_to_cart"
-        disabled={!this.state.product.inStock}
-        onClick={() => this.props.addToCart(this.state.cartItem)}
-      >
-        ADD TO CART
-      </button>
-    );
-  }
-
-  renderDescription() {
-    return (
-      <div className="description_field">
-        {parse(this.state.product.description)}
-      </div>
     );
   }
 }
@@ -343,4 +204,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductPageContainer);

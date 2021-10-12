@@ -1,7 +1,7 @@
 import "./App.css";
 import { PureComponent } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ProductPage from "../pages/ProductPage/ProductPage";
+import ProductPage from "../pages/ProductPage/ProductPageContainer";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
 import CartPage from "../pages/CartPage/CartPage";
 import Navbar from "../components/Navbar/Navbar";
