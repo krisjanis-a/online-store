@@ -85,7 +85,6 @@ export class CartItem extends PureComponent {
           <p className="item_name">{name}</p>
         </div>
         <p className="item_price">
-          {" "}
           {currencySymbols[currency] + " " + this.getPriceByCurrency(prices)}
         </p>
       </div>
