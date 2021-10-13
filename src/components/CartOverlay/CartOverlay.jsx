@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import "./CartOverlay.css";
-import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
+import CartItem from "../CartItem/CartItem";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import calculateTotal from "../../utils/calculateTotal";
@@ -68,7 +68,11 @@ export class CartOverlay extends PureComponent {
     return (
       <div className="cart_items">
         {cartItems.map((item) => (
-          <CartOverlayItem key={item.cartItemId} itemId={item.cartItemId} />
+          <CartItem
+            key={item.cartItemId}
+            itemId={item.cartItemId}
+            cartItemType={"cart_overlay_item"}
+          />
         ))}
       </div>
     );

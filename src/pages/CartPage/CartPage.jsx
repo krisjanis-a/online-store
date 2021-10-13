@@ -28,7 +28,11 @@ export class CartPage extends PureComponent {
     const { cartItems } = this.props;
 
     return cartItems.map((item) => (
-      <CartItem key={item.cartItemId} itemId={item.cartItemId} />
+      <CartItem
+        key={item.cartItemId}
+        itemId={item.cartItemId}
+        cartItemType={"cart_item"}
+      />
     ));
   }
 

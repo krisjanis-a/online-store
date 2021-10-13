@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import "./CartItem.css";
+import "./CartOverlayItem.css";
 import { connect } from "react-redux";
 import currencySymbols from "../../utils/currencySymbols";
 import changeImage from "../../utils/changeImage";
@@ -33,13 +34,17 @@ export class CartItem extends PureComponent {
 
   render() {
     const { item } = this.state;
+    const { cartItemType } = this.props;
 
     return (
-      <div className="cart_item">
+      <div className={cartItemType}>
         {item !== null ? (
           <>
             <div className="product_info">
-              {this.renderInfoText()}
+              {cartItemType === "cart_item" && this.renderInfoText()}
+              {cartItemType === "cart_overlay_item" &&
+                this.renderOverlayInfoText()}
+
               {this.renderAttributes()}
             </div>
             <div className="quantity-image_wrapper">
@@ -48,7 +53,7 @@ export class CartItem extends PureComponent {
             </div>
           </>
         ) : (
-          <h3 style={{ margin: "1rem" }}>Item cannot be displayed</h3>
+          <>{this.renderCannotDisplay()}</>
         )}
       </div>
     );
@@ -65,6 +70,24 @@ export class CartItem extends PureComponent {
         <h3 className="price">
           {currencySymbols[currency] + " " + this.getPriceByCurrency(prices)}
         </h3>
+      </div>
+    );
+  }
+
+  renderOverlayInfoText() {
+    const { brand, name, prices } = this.state.item.cartItem;
+    const { currency } = this.props;
+
+    return (
+      <div className="text">
+        <div className="brand_and_name">
+          <h3 className="item_brand">{brand}</h3>
+          <p className="item_name">{name}</p>
+        </div>
+        <p className="item_price">
+          {" "}
+          {currencySymbols[currency] + " " + this.getPriceByCurrency(prices)}
+        </p>
       </div>
     );
   }
@@ -163,6 +186,21 @@ export class CartItem extends PureComponent {
         )}
         <img className="item_image" src={gallery[imageIndex]} alt="" />
       </div>
+    );
+  }
+
+  renderCannotDisplay() {
+    const { cartItemType } = this.props;
+
+    return (
+      <>
+        {cartItemType === "cart_item" && (
+          <h3 style={{ margin: "1rem" }}>Item cannot be displayed</h3>
+        )}
+        {cartItemType === "cart_overlay_item" && (
+          <h4 style={{ margin: "1.5rem" }}>Item cannot be displayed</h4>
+        )}
+      </>
     );
   }
 }
