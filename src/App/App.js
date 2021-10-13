@@ -1,4 +1,3 @@
-import "./App.css";
 import { PureComponent } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductPage from "../pages/ProductPage/ProductPageContainer";
