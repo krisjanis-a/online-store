@@ -1,8 +1,10 @@
 import makeQuery from "../../utils/apolloClient";
 
 export default function fetchProductById() {
+  const { productId } = this.props;
+
   const productIdQuery = `query {
-      product(id: "${this.props.productId}") {
+      product(id: "${productId}") {
         id
         name
         inStock

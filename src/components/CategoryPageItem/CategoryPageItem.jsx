@@ -21,24 +21,15 @@ export class CategoryPageItem extends PureComponent {
     };
 
     this.getPriceByCurrency = getPriceByCurrency.bind(this);
+    this.fetchProductById = fetchProductById.bind(this);
   }
 
   componentDidMount() {
-    const { product } = this.state;
-
-    if (Object.keys(product).length === 0) {
-      this.fetchProductById = fetchProductById.bind(this);
-      this.fetchProductById();
-    }
+    this.fetchProductById();
   }
 
   componentDidUpdate() {
-    const { product } = this.state;
-
-    if (Object.keys(product).length === 0) {
-      this.fetchProductById = fetchProductById.bind(this);
-      this.fetchProductById();
-    }
+    this.fetchProductById();
   }
 
   render() {

@@ -1,8 +1,10 @@
 import makeQuery from "../../utils/apolloClient";
 
 export default function fetchProductById() {
+  const { selectedProduct, products, saveProduct } = this.props;
+
   const productIdQuery = `query {
-      product(id: "${this.props.selectedProduct}") {
+      product(id: "${selectedProduct}") {
         id
         name
         inStock
@@ -29,12 +31,11 @@ export default function fetchProductById() {
 
   // Check if product already exists in redux store
   if (
-    this.props.products.length !== 0 &&
-    this.props.products.filter((item) => item.id === this.props.selectedProduct)
-      .length !== 0
+    products.length !== 0 &&
+    products.filter((item) => item.id === selectedProduct).length !== 0
   ) {
-    const productInfo = this.props.products.filter(
-      (item) => item.id === this.props.selectedProduct
+    const productInfo = products.filter(
+      (item) => item.id === selectedProduct
     )[0];
 
     this.setState({
@@ -59,7 +60,7 @@ export default function fetchProductById() {
           mainImage: productInfo.gallery[0],
         });
 
-        this.props.saveProduct(productInfo);
+        saveProduct(productInfo);
       }
     });
   }

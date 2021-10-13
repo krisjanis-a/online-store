@@ -1,23 +1,30 @@
 export default function changeImage(direction) {
+  const {
+    imageIndex,
+    item: {
+      cartItem: { gallery },
+    },
+  } = this.state;
+
   if (direction === "next") {
-    if (this.state.imageIndex === this.state.item.cartItem.gallery.length - 1) {
+    if (imageIndex === gallery.length - 1) {
       this.setState({
         imageIndex: 0,
       });
     } else {
       this.setState({
-        imageIndex: this.state.imageIndex + 1,
+        imageIndex: imageIndex + 1,
       });
     }
   }
   if (direction === "prev") {
-    if (this.state.imageIndex === 0) {
+    if (imageIndex === 0) {
       this.setState({
-        imageIndex: this.state.item.cartItem.gallery.length - 1,
+        imageIndex: gallery.length - 1,
       });
     } else {
       this.setState({
-        imageIndex: this.state.imageIndex - 1,
+        imageIndex: imageIndex - 1,
       });
     }
   }

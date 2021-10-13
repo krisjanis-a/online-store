@@ -1,9 +1,10 @@
 export default function calculateTotal() {
-  const total = this.props.cartItems.map(
+  const { cartItems, currency } = this.props;
+
+  const total = cartItems.map(
     (item) =>
-      item.cartItem.prices.filter(
-        (price) => price.currency === this.props.currency
-      )[0].amount * item.quantity
+      item.cartItem.prices.filter((price) => price.currency === currency)[0]
+        .amount * item.quantity
   );
   return Number.parseFloat(total.reduce((a, b) => a + b)).toFixed(2);
 }

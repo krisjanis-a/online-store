@@ -28,10 +28,11 @@ export class ProductPageContainer extends PureComponent {
         pricesItem: [],
       },
     };
+
+    this.fetchProductById = fetchProductById.bind(this);
   }
 
   componentDidMount() {
-    this.fetchProductById = fetchProductById.bind(this);
     this.fetchProductById();
   }
 
@@ -41,7 +42,6 @@ export class ProductPageContainer extends PureComponent {
 
     // If no selected product present in props (redux store) on component mounting - case where product is accessed from URL
     if (Object.keys(product).length === 0) {
-      this.fetchProductById = fetchProductById.bind(this);
       this.fetchProductById();
     }
 
